@@ -30,15 +30,15 @@ namespace Systems.StatSystem
         #region Properties - Getters/Setters
         public override int Base
         {
-            get { return base.Base + LevelValue + LinkerValue; }
+            get { return base.Base + Level + Linker; }
         }
 
-        public int LevelValue
+        public int Level
         {
             get { return _statLevelValue; }
         }
 
-        public int LinkerValue
+        public int Linker
         {
             get
             {

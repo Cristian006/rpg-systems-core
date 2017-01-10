@@ -35,12 +35,12 @@ namespace Systems.StatSystem
         {
             get
             {
-                return base.Value + ModifierValue;
+                return base.Value + Modifier;
             }
         }
 
         //the stats current mod value of added modifiers
-        public int ModifierValue
+        public int Modifier
         {
             get
             {

@@ -6,7 +6,7 @@ namespace Systems.StatSystem
     public class Stat
     {
         private string _statName;
-        private int _statBaseValue;
+        private int _baseValue;
 
         #region Constructors
         public Stat()
@@ -37,8 +37,8 @@ namespace Systems.StatSystem
 
         public virtual int Base
         {
-            get { return _statBaseValue; }
-            set { _statBaseValue = value; }
+            get { return _baseValue; }
+            set { _baseValue = value; }
         }
         #endregion
 

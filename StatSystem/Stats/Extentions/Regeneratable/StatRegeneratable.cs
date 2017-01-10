@@ -128,7 +128,7 @@ namespace Systems.StatSystem
         //overriding the update linker function to work with the secondary stat linkers
         public override void UpdateLinkers()
         {
-            LinkerValue = 0;
+            Linker = 0;
 
             foreach (StatLinker link in Linkers)
             {
@@ -139,7 +139,7 @@ namespace Systems.StatSystem
                 }
                 else
                 {
-                    LinkerValue += link.Value;
+                    Linker += link.Value;
                 }
             }
 
