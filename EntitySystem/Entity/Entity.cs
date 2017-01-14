@@ -105,5 +105,6 @@ namespace Systems.EntitySystem
 
         //require children to initialize
         protected abstract void Awake();
+        public abstract void TakeDamage(int damage);
     }
 }
