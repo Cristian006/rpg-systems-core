@@ -354,9 +354,7 @@ namespace Systems.InventorySystem
         /// <param name="equip"></param>
         public void Equip<T>(T item, int index, bool equip) where T : Item
         {
-            Type t = typeof(T);
-
-            if (t == typeof(Weapon))
+            if (item.IType == ItemType.Weapon)
             {
                 Debug.Log("Item trying to equip is a weapon");
                 if ((item as Weapon).WeaponType == WeaponType.Primary)
@@ -373,7 +371,7 @@ namespace Systems.InventorySystem
                     TriggerOnEquippedChange();
                 }
             }
-            else if (t == typeof(QuestItem))
+            else if (item.IType == ItemType.Quest)
             {
                 TertiaryIndex = equip ? index : -1;
                 TriggerTertiaryChange();
@@ -405,6 +403,11 @@ namespace Systems.InventorySystem
                     Equip<QuestItem>((QuestItem)item, QuestItems.Objects.IndexOf((QuestItem)item), equip);
                     break;
             }
+        }
+
+        public void Equip<T>(int index, bool equip = true) where T : Item
+        {
+            Equip<T>(GetAt<T>(index), index, equip);
         }
         #endregion
 

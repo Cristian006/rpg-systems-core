@@ -11,7 +11,7 @@ namespace Systems.StatSystem
         #region Constructors
         public StatCollection()
         {
-            _statDictionary = new Dictionary<StatType, Stat>();
+            //_statDictionary = new Dictionary<StatType, Stat>();
         }
         #endregion
 

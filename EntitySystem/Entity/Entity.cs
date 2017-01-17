@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using Systems.StatSystem;
-using UnityEngine.UI;
-using System.Collections;
 using Systems.EntitySystem.Interfaces;
+
 namespace Systems.EntitySystem
 {
     public class EntityData
@@ -48,7 +47,6 @@ namespace Systems.EntitySystem
                 {
                     stats = GetComponent<StatCollection>();
                 }
-
                 return stats;
             }
             protected set { stats = value; }
@@ -102,9 +100,7 @@ namespace Systems.EntitySystem
         {
             return Stats.GetStat<T>(type);
         }
-
-        //require children to initialize
-        protected abstract void Awake();
+        
         public abstract void TakeDamage(int damage);
     }
 }
