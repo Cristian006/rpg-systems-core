@@ -327,7 +327,7 @@ namespace Systems.InventorySystem
             switch (item.IType)
             {
                 case ItemType.Weapon:
-                    if ((item as Weapon).WeaponType == WeaponType.Primary)
+                    if (((Weapon)item).WeaponType == WeaponType.Primary)
                     {
                         return PrimaryIndex == Weapons.Objects.IndexOf((Weapon)item);
                     }
@@ -356,10 +356,10 @@ namespace Systems.InventorySystem
         {
             if (item.IType == ItemType.Weapon)
             {
-                Debug.Log("Item trying to equip is a weapon");
+                //Debug.Log("Item trying to equip is a weapon");
                 if ((item as Weapon).WeaponType == WeaponType.Primary)
                 {
-                    Debug.Log("Setting it as a Primary Weapon");
+                    //Debug.Log("Setting it as a Primary Weapon");
                     PrimaryIndex = equip ? index : -1;
                     TriggerPrimaryChange();
                     TriggerOnEquippedChange();
@@ -393,7 +393,6 @@ namespace Systems.InventorySystem
             switch (item.IType)
             {
                 case ItemType.Weapon:
-                    Debug.Log("Equipping Weapon");
                     Equip<Weapon>((Weapon)item, Weapons.Objects.IndexOf((Weapon)item), equip);
                     break;
                 case ItemType.Consumable:

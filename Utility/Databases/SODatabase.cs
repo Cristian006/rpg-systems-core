@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
 
 namespace Systems.Utility.Database
 {
@@ -10,8 +9,8 @@ namespace Systems.Utility.Database
         {
 #if UNITY_EDITOR
             t.hideFlags = UnityEngine.HideFlags.HideInHierarchy;
-            AssetDatabase.AddObjectToAsset(t, this);
-            EditorUtility.SetDirty(this);
+            UnityEditor.AssetDatabase.AddObjectToAsset(t, this);
+            UnityEditor.EditorUtility.SetDirty(this);
 #endif
         }
 
@@ -19,7 +18,7 @@ namespace Systems.Utility.Database
         {
 #if UNITY_EDITOR
             DestroyImmediate(t, true);
-            EditorUtility.SetDirty(this);
+            UnityEditor.EditorUtility.SetDirty(this);
 #endif
         }
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections.Generic;
-using UnityEditor;
+using Systems.Utility.Database.Interfaces;
+
 
 namespace Systems.Utility.Database
 {
@@ -31,15 +31,15 @@ namespace Systems.Utility.Database
         {
             #if UNITY_EDITOR
             string dbFullPath = @"Assets/" + pathToDB + DBName;
-            U database = AssetDatabase.LoadAssetAtPath(dbFullPath, typeof(U)) as U;
+            U database = UnityEditor.AssetDatabase.LoadAssetAtPath(dbFullPath, typeof(U)) as U;
 
             if (database == null)
             {
                 System.IO.Directory.CreateDirectory(Application.dataPath + "/" + pathToDB);
                 database = ScriptableObject.CreateInstance<U>();
-                AssetDatabase.CreateAsset(database, dbFullPath);
-                AssetDatabase.SaveAssets();
-                AssetDatabase.Refresh();
+                UnityEditor.AssetDatabase.CreateAsset(database, dbFullPath);
+                UnityEditor.AssetDatabase.SaveAssets();
+                UnityEditor.AssetDatabase.Refresh();
             }
 
             return database;
