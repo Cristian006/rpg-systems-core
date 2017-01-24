@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
+using Systems.Utility.Database.Interfaces;
 
 namespace Systems.Utility.Database
 {

@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using Systems.Utility.Database;
+﻿using Systems.Utility.Database;
 
-namespace Systems.EntitySystem
+namespace Systems.EntitySystem.Database
 {
     public class EntityDatabase : BaseDatabase<EntityAsset>
     {

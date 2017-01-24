@@ -11,7 +11,7 @@ namespace Systems.StatSystem
         #region Constructors
         public StatCollection()
         {
-            _statDictionary = new Dictionary<StatType, Stat>();
+            //empty constructor
         }
         #endregion
 
@@ -24,9 +24,9 @@ namespace Systems.StatSystem
                 {
                     //initialize the stat collection if it hasn't already
                     _statDictionary = new Dictionary<StatType, Stat>();
+                    //configure stats
                     ConfigureStats();
                 }
-
                 return _statDictionary;
             }
         }
@@ -46,10 +46,10 @@ namespace Systems.StatSystem
         }
 
         /// <summary>
-        /// Returns a List of all regenerating stats
+        /// Returns a List of just regenerating stats
         /// </summary>
         /// <returns></returns>
-        public List<StatRegeneratable> GetAllRegeneratingStats
+        public List<StatRegeneratable> RegeneratingStats
         {
             get
             {
@@ -68,11 +68,53 @@ namespace Systems.StatSystem
                 return re;
             }
         }
+
+        /// <summary>
+        /// Returns list of just vital stats (which includes regenerating stats as well)
+        /// </summary>
+        public List<StatVital> VitalStats
+        {
+            get
+            {
+                List<StatVital> vs = new List<StatVital>();
+                foreach(StatType i in StatDict.Keys)
+                {
+                    var stat = this[i];
+                    if((stat as IStatCurrentValueChanged) != null)
+                    {
+                        vs.Add(stat as StatVital);
+                    }
+                }
+                return vs;
+            }
+        }
+
+        /// <summary>
+        /// Rerturns list of just Attributes
+        /// </summary>
+        public List<StatAttribute> AttributeStats
+        {
+            get
+            {
+                List<StatAttribute> sa = new List<StatAttribute>();
+                foreach(StatType i in StatDict.Keys)
+                {
+                    var stat = this[i];
+                    if((stat as IStatLinkable) != null && (stat as IStatCurrentValueChanged) == null)
+                    {
+                       sa.Add(stat as StatAttribute);
+                    }
+                }
+                return sa;
+            }
+        }
         #endregion
 
         void Awake()
         {
-            ConfigureStats();
+            //So configure stats can either be on awake or be called when StatDict is being called initially
+            //but not both
+            //ConfigureStats();
         }
 
         //regenerating stats
@@ -84,7 +126,7 @@ namespace Systems.StatSystem
         //Only way to make regen stats work
         void RegenStats()
         {
-            foreach (var i in GetAllRegeneratingStats)
+            foreach (var i in RegeneratingStats)
             {
                 if (i.Max != i.Value)
                 {

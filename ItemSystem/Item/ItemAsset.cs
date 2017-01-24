@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections.Generic;
 using Systems.Utility.Database;
-using UnityEditor;
 
 namespace Systems.ItemSystem
 {
