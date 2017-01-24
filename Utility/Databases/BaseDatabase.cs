@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
 
 namespace Systems.Utility.Database
 {
@@ -9,14 +8,14 @@ namespace Systems.Utility.Database
         protected override void OnAddObject(T t)
         {
 #if UNITY_EDITOR
-            EditorUtility.SetDirty(this);
+            UnityEditor.EditorUtility.SetDirty(this);
 #endif
         }
 
         protected override void OnRemoveObject(T t)
         {
 #if UNITY_EDITOR
-            EditorUtility.SetDirty(this);
+            UnityEditor.EditorUtility.SetDirty(this);
 #endif
         }
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Systems.Utility.Database
+namespace Systems.Utility.Database.Interfaces
 {
     public interface IDatabaseAsset
     {
