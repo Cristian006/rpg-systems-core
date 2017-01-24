@@ -1,9 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using System.Collections;
-using Systems.StatSystem;
-using Systems.EntitySystem;
-using Systems.Config;
+using Systems.EntitySystem.Enumerations;
+using Systems.EntitySystem.Database;
 
 namespace Systems.EntitySystem.Editor
 {
@@ -105,6 +103,11 @@ namespace Systems.EntitySystem.Editor
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Player Type", GUILayout.Width(80));
                         asset.PType = (PlayerType)EditorGUILayout.EnumPopup(asset.PType);
+                        GUILayout.EndHorizontal();
+
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("Starting Level", GUILayout.Width(80));
+                        asset.StartLevel = (int)EditorGUILayout.IntSlider(asset.StartLevel,0, 99);
                         GUILayout.EndHorizontal();
 
                         GUILayout.Space(10);

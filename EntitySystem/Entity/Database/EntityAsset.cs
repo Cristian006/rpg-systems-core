@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Systems.Utility.Database;
-using Systems.StatSystem;
+using Systems.EntitySystem.Enumerations;
 
-namespace Systems.EntitySystem
+namespace Systems.EntitySystem.Database
 {
     [System.Serializable]
     public class EntityAsset : BaseDatabaseAsset
@@ -19,6 +18,8 @@ namespace Systems.EntitySystem
         EntityType entityClass;
         [SerializeField]
         PlayerType playerType;
+        [SerializeField]
+        int startingLevel;
 
         #region CONSTRUCTORS
         public EntityAsset() : base()
@@ -64,6 +65,16 @@ namespace Systems.EntitySystem
             defaultInventory = inventory;
             EClass = entityClass;
             PType = playerType;
+        }
+
+        public EntityAsset(int id, string name, string description, List<string> inventory, EntityType entityClass, PlayerType playerType, int startLevel) : base(id, name)
+        {
+            Icon = null;
+            Description = description;
+            defaultInventory = inventory;
+            EClass = entityClass;
+            PType = playerType;
+            StartLevel = startLevel;
         }
         #endregion
 
@@ -124,6 +135,19 @@ namespace Systems.EntitySystem
                 playerType = value;
             }
         }
-        #endregion
+
+        public int StartLevel
+        {
+            get
+            {
+                return startingLevel;
+            }
+
+            set
+            {
+                startingLevel = value;
+            }
+            #endregion
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Systems.EntitySystem
+namespace Systems.EntitySystem.Targeting
 {
     public class Target
     {

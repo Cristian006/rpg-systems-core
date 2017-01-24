@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-namespace Systems.EntitySystem
+﻿namespace Systems.EntitySystem.Enumerations
 {
     /// <summary>
     /// A list of different types of character classes

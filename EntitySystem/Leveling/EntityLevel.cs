@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
+using Systems.EntitySystem.Leveling.EventArgs;
 
-namespace Systems.EntitySystem
+namespace Systems.EntitySystem.Leveling
 {
     public abstract class EntityLevel : MonoBehaviour
     {

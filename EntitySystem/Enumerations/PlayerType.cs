@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-namespace Systems.EntitySystem
+﻿namespace Systems.EntitySystem.Enumerations
 {
     public enum PlayerType
     {

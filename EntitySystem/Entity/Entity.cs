@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using Systems.StatSystem;
-using Systems.EntitySystem.Interfaces;
+using Systems.EntitySystem.Enumerations;
+using Systems.EntitySystem.Database;
 
 namespace Systems.EntitySystem
 {
@@ -27,58 +27,13 @@ namespace Systems.EntitySystem
         public string entityDescription;
         public EntityType entityType;
         public PlayerType playerType;
-
     }
 
     //Entity is simply a script that has an associated StatCollection
     //Gives children a method to get the stats it needs
-    public abstract class Entity : MonoBehaviour, ITarget
+    public abstract class Entity : MonoBehaviour
     {
-        private StatCollection stats;
-        private EntityLevel level;
         private EntityData data;
-        private Target _target;
-
-        public StatCollection Stats
-        {
-            get
-            {
-                if (stats == null)
-                {
-                    stats = GetComponent<StatCollection>();
-                }
-                return stats;
-            }
-            protected set { stats = value; }
-        }
-
-        public Target target
-        {
-            get
-            {
-                if (_target == null)
-                {
-                    _target = new Target();
-                }
-                return _target;
-            }
-        }
-
-        public EntityLevel Level
-        {
-            get
-            {
-                if (level == null)
-                {
-                    level = GetComponent<EntityLevel>();
-                }
-                return level;
-            }
-            set
-            {
-                level = value;
-            }
-        }
 
         public EntityData Data
         {
@@ -94,13 +49,6 @@ namespace Systems.EntitySystem
             {
                 data = value;
             }
-        } 
-
-        protected T GetStat<T>(StatType type) where T : Stat
-        {
-            return Stats.GetStat<T>(type);
         }
-        
-        public abstract void TakeDamage(int damage);
     }
 }
