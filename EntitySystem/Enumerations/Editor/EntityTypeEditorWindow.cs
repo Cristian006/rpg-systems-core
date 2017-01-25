@@ -1,18 +1,18 @@
-﻿using UnityEditor;
-using UnityEngine;
-using Systems.StatSystem.Database;
+﻿using UnityEngine;
+using UnityEditor;
+using Systems.EntitySystem.Database;
 using Systems.Config;
 
-namespace Systems.StatSystem.Editor
+namespace Systems.EntitySystem.Editor
 {
-    public class StatTypeEditorWindow : EditorWindow
-    {        
-        [MenuItem("Window/Systems/Stat Type Editor %#T")]
+    public class EntityTypeEditorWindow : EditorWindow
+    {
+        [MenuItem("Window/Systems/Entity System/Entity Type Editor %#W")]
         static public void ShowWindow()
         {
-            var window = GetWindow<StatTypeEditorWindow>();
+            var window = GetWindow<EntityTypeEditorWindow>();
             window.minSize = new Vector2(SystemsConfig.EDITOR_MIN_WINDOW_WIDTH, SystemsConfig.EDITOR_MIN_WINDOW_HEIGHT);
-            window.titleContent.text = "Stat System - Stat Types";
+            window.titleContent.text = "Entity System - Entity Types";
             window.Show();
         }
 
@@ -24,7 +24,7 @@ namespace Systems.StatSystem.Editor
         {
             get
             {
-                if(_toggleButtonStyle == null)
+                if (_toggleButtonStyle == null)
                 {
                     _toggleButtonStyle = new GUIStyle(EditorStyles.toolbarButton);
                     ToggleButtonStyle.alignment = TextAnchor.MiddleLeft;
@@ -42,17 +42,17 @@ namespace Systems.StatSystem.Editor
         {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
-            for(int i =0; i < StatTypeDatabase.GetAssetCount(); i++)
+            for (int i = 0; i < EntityTypeDatabase.GetAssetCount(); i++)
             {
-                var asset = StatTypeDatabase.GetAt(i);
-                if(asset != null)
+                var asset = EntityTypeDatabase.GetAt(i);
+                if (asset != null)
                 {
                     GUILayout.BeginHorizontal(EditorStyles.toolbar);
                     GUILayout.Label(string.Format("ID: {0}", asset.ID.ToString("D3")), GUILayout.Width(60));
 
                     bool clicked = GUILayout.Toggle(asset.ID == activeID, asset.Name, ToggleButtonStyle);
 
-                    if(clicked != (asset.ID == activeID))
+                    if (clicked != (asset.ID == activeID))
                     {
                         if (clicked)
                         {
@@ -65,14 +65,14 @@ namespace Systems.StatSystem.Editor
                         }
                     }
 
-                    if (GUILayout.Button("-", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Stat Type", "Are you sure you want to delete " + asset.Name + " Stat Type?", "Delete", "Cancel"))
+                    if (GUILayout.Button("-", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Entity Type", "Are you sure you want to delete " + asset.Name + " Entity Type?", "Delete", "Cancel"))
                     {
-                        StatTypeDatabase.Instance.RemoveAt(i);
+                        EntityTypeDatabase.Instance.RemoveAt(i);
                     }
 
                     GUILayout.EndHorizontal();
 
-                    if(activeID == asset.ID)
+                    if (activeID == asset.ID)
                     {
                         EditorGUI.BeginChangeCheck();
 
@@ -81,10 +81,10 @@ namespace Systems.StatSystem.Editor
                         GUILayout.BeginHorizontal();
                         //SPRITE ON LEFT OF HORIZONTAL
                         GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
-                        GUILayout.Label("Stat Sprite", GUILayout.Width(72));
+                        GUILayout.Label("Entity Sprite", GUILayout.Width(72));
                         asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
                         GUILayout.EndVertical();   //end vertical
-                        
+
                         //INFO ON RIGHT OF HORIZONTAL
                         GUILayout.BeginVertical(); //begin vertical
 
@@ -108,7 +108,7 @@ namespace Systems.StatSystem.Editor
 
                         if (EditorGUI.EndChangeCheck())
                         {
-                            EditorUtility.SetDirty(StatTypeDatabase.Instance);
+                            EditorUtility.SetDirty(EntityTypeDatabase.Instance);
                         }
                     }
                 }
@@ -119,17 +119,16 @@ namespace Systems.StatSystem.Editor
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Add Type", EditorStyles.toolbarButton))
             {
-                var newAsset = new StatTypeAsset(StatTypeDatabase.Instance.GetNextId());
-                StatTypeDatabase.Instance.Add(newAsset);
+                var newAsset = new EntityTypeAsset(EntityTypeDatabase.Instance.GetNextId());
+                EntityTypeDatabase.Instance.Add(newAsset);
             }
 
-            if(GUILayout.Button("Generate StatType Enum", EditorStyles.toolbarButton))
+            if (GUILayout.Button("Generate EntityType Enum", EditorStyles.toolbarButton))
             {
-                StatTypeGenerator.CheckAndGenerateFile();
+                EntityTypeGenerator.CheckAndGenerateFile();
             }
 
             GUILayout.EndHorizontal();
         }
     }
 }
-

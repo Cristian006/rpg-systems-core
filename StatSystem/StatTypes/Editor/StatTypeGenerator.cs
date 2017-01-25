@@ -1,10 +1,6 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
-using System;
+﻿using UnityEditor;
 using System.IO;
-using System.Text;
-using Systems.StatSystem;
+using Systems.StatSystem.Database;
 
 namespace Systems.StatSystem.Editor
 {
@@ -21,8 +17,6 @@ namespace Systems.StatSystem.Editor
             }
             WriteStatTypesToFile(assetPath);
         }
-
-
 
         static string GetAssetPathForFile(string name)
         {

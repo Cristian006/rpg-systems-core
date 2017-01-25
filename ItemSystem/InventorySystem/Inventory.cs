@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
-using System.Collections.Generic;
-using Systems.ItemSystem;
-using Systems.StatSystem;
 
 //TODO: Event handlers for weapon change
-namespace Systems.InventorySystem
+namespace Systems.ItemSystem.InventorySystem
 {
     public class Inventory
     {
@@ -232,12 +228,12 @@ namespace Systems.InventorySystem
         }
         #endregion
 
-        public void Load()
+        protected virtual void Load()
         {
             
         }
 
-        public void Save()
+        protected virtual void Save()
         {
 
         }

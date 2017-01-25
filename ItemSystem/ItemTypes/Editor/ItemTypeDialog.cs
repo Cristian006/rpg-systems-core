@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using Systems.StatSystem.Database;
+using Systems.ItemSystem.Database;
 
-namespace Systems.StatSystem.Editor
+namespace Systems.ItemSystem.Editor
 {
-    public class StatTypeDialog : EditorWindow
+    public class ItemTypeDialog : EditorWindow
     {
-        const string windowTitle = "Stat Types";
+        const string windowTitle = "Item Types";
 
-        public delegate void SelectEvent(StatTypeAsset asset);
+        public delegate void SelectEvent(ItemTypeAsset asset);
 
         public SelectEvent OnAssetSelect;
 
@@ -16,7 +16,7 @@ namespace Systems.StatSystem.Editor
 
         static public void Display(SelectEvent del)
         {
-            var window = GetWindow<StatTypeDialog>(true, windowTitle, true);
+            var window = GetWindow<ItemTypeDialog>(true, windowTitle, true);
             window.OnAssetSelect = del;
             window.Show();
         }
@@ -24,14 +24,14 @@ namespace Systems.StatSystem.Editor
         public void OnGUI()
         {
             scroll = GUILayout.BeginScrollView(scroll);
-            for(int i = 0; i < StatTypeDatabase.GetAssetCount(); i++)
+            for (int i = 0; i < ItemTypeDatabase.GetAssetCount(); i++)
             {
-                var asset = StatTypeDatabase.GetAt(i);
-                if(asset != null)
+                var asset = ItemTypeDatabase.GetAt(i);
+                if (asset != null)
                 {
                     if (GUILayout.Button(asset.Name, EditorStyles.toolbarButton))
                     {
-                        if(OnAssetSelect != null)
+                        if (OnAssetSelect != null)
                         {
                             OnAssetSelect(asset);
                         }

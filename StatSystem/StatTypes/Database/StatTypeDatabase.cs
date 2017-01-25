@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using Systems.Utility.Database;
+﻿using Systems.Utility.Database;
 
-namespace Systems.StatSystem
+namespace Systems.StatSystem.Database
 {
     public class StatTypeDatabase : BaseDatabase<StatTypeAsset>
     {

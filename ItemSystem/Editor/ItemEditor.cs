@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
+using Systems.Config;
 using Systems.StatSystem;
 
 namespace Systems.ItemSystem.Editor
 {
     public partial class ItemEditor : EditorWindow
     {
-        [MenuItem("Window/Systems/Item Editor %#I")]
+        [MenuItem("Window/Systems/Item System/Item Editor %#I")]
         static public void ShowWindow()
         {
             var window = GetWindow<ItemEditor>();
-            window.minSize = new Vector2(800, 600);
+            window.minSize = new Vector2(SystemsConfig.EDITOR_MIN_WINDOW_WIDTH, SystemsConfig.EDITOR_MIN_WINDOW_HEIGHT);
             window.titleContent.text = "Item System";
             window.Show();
         }

@@ -2,16 +2,17 @@
 using UnityEngine;
 using Systems.EntitySystem.Enumerations;
 using Systems.EntitySystem.Database;
+using Systems.Config;
 
 namespace Systems.EntitySystem.Editor
 {
     public class EntityEditor : EditorWindow
     {
-        [MenuItem("Window/Systems/Entity Editor %#E")]
+        [MenuItem("Window/Systems/Entity System/Entity Editor %#E")]
         static public void ShowWindow()
         {
             var window = GetWindow<EntityEditor>();
-            window.minSize = new Vector2(800, 600);
+            window.minSize = new Vector2(SystemsConfig.EDITOR_MIN_WINDOW_WIDTH, SystemsConfig.EDITOR_MIN_WINDOW_HEIGHT);
             window.titleContent.text = "Entity System";
             window.Show();
         }
