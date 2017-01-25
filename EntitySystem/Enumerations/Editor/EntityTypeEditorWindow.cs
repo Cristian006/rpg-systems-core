@@ -81,7 +81,7 @@ namespace Systems.EntitySystem.Editor
                         GUILayout.BeginHorizontal();
                         //SPRITE ON LEFT OF HORIZONTAL
                         GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
-                        GUILayout.Label("Entity Sprite", GUILayout.Width(72));
+                        GUILayout.Label("Entity Type Sprite", GUILayout.Width(72));
                         asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
                         GUILayout.EndVertical();   //end vertical
 

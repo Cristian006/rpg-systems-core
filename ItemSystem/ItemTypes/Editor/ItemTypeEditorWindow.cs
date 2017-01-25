@@ -35,7 +35,17 @@ namespace Systems.ItemSystem.Editor
 
         public void OnEnable()
         {
+            if(ItemTypeDatabase.GetAssetCount() == 0)
+            {
+                Initialize();
+            }
+        }
 
+        void Initialize()
+        {
+            ItemTypeDatabase.Instance.Add(new ItemTypeAsset(ItemTypeDatabase.Instance.GetNextId(), "Weapon"));
+            ItemTypeDatabase.Instance.Add(new ItemTypeAsset(ItemTypeDatabase.Instance.GetNextId(), "Consumable"));
+            ItemTypeDatabase.Instance.Add(new ItemTypeAsset(ItemTypeDatabase.Instance.GetNextId(), "Quest"));
         }
 
         public void OnGUI()
@@ -65,11 +75,6 @@ namespace Systems.ItemSystem.Editor
                         }
                     }
 
-                    if (GUILayout.Button("-", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Item Type", "Are you sure you want to delete " + asset.Name + " Item Type?", "Delete", "Cancel"))
-                    {
-                        ItemTypeDatabase.Instance.RemoveAt(i);
-                    }
-
                     GUILayout.EndHorizontal();
 
                     if (activeID == asset.ID)
@@ -81,7 +86,7 @@ namespace Systems.ItemSystem.Editor
                         GUILayout.BeginHorizontal();
                         //SPRITE ON LEFT OF HORIZONTAL
                         GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
-                        GUILayout.Label("Item Sprite", GUILayout.Width(72));
+                        GUILayout.Label("Item Type Sprite", GUILayout.Width(72));
                         asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
                         GUILayout.EndVertical();   //end vertical
 
@@ -90,7 +95,7 @@ namespace Systems.ItemSystem.Editor
 
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Name", GUILayout.Width(80));
-                        asset.Name = EditorGUILayout.TextField(asset.Name);
+                        GUILayout.Label(asset.Name);
                         GUILayout.EndHorizontal();
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Short Name", GUILayout.Width(80));
@@ -117,17 +122,10 @@ namespace Systems.ItemSystem.Editor
             GUILayout.EndScrollView();
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Add Type", EditorStyles.toolbarButton))
-            {
-                var newAsset = new ItemTypeAsset(ItemTypeDatabase.Instance.GetNextId());
-                ItemTypeDatabase.Instance.Add(newAsset);
-            }
-
             if (GUILayout.Button("Generate ItemType Enum", EditorStyles.toolbarButton))
             {
                 ItemTypeGenerator.CheckAndGenerateFile();
             }
-
             GUILayout.EndHorizontal();
         }
     }
