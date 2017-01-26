@@ -12,7 +12,7 @@ namespace Systems.ItemSystem.Editor
         {
             var window = GetWindow<ItemEditor>();
             window.minSize = new Vector2(SystemsConfig.EDITOR_MIN_WINDOW_WIDTH, SystemsConfig.EDITOR_MIN_WINDOW_HEIGHT);
-            window.titleContent.text = "Item System";
+            window.titleContent.text = "Item Editor";
             window.Show();
         }
 

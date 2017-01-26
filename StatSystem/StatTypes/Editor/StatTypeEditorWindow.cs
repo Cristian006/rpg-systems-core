@@ -12,7 +12,7 @@ namespace Systems.StatSystem.Editor
         {
             var window = GetWindow<StatTypeEditorWindow>();
             window.minSize = new Vector2(SystemsConfig.EDITOR_MIN_WINDOW_WIDTH, SystemsConfig.EDITOR_MIN_WINDOW_HEIGHT);
-            window.titleContent.text = "Stat System - Stat Types";
+            window.titleContent.text = "Stat Types";
             window.Show();
         }
 
@@ -81,7 +81,7 @@ namespace Systems.StatSystem.Editor
                         GUILayout.BeginHorizontal();
                         //SPRITE ON LEFT OF HORIZONTAL
                         GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
-                        GUILayout.Label("Stat Sprite", GUILayout.Width(72));
+                        GUILayout.Label("Stat Emblem", GUILayout.Width(72));
                         asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
                         GUILayout.EndVertical();   //end vertical
                         
@@ -93,8 +93,8 @@ namespace Systems.StatSystem.Editor
                         asset.Name = EditorGUILayout.TextField(asset.Name);
                         GUILayout.EndHorizontal();
                         GUILayout.BeginHorizontal();
-                        GUILayout.Label("Short Name", GUILayout.Width(80));
-                        asset.ShortName = EditorGUILayout.TextField(asset.ShortName);
+                        GUILayout.Label("Alias", GUILayout.Width(80));
+                        asset.Alias = EditorGUILayout.TextField(asset.Alias);
                         GUILayout.EndHorizontal();
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Description", GUILayout.Width(80));

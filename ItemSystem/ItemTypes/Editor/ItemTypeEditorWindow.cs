@@ -7,12 +7,12 @@ namespace Systems.ItemSystem.Editor
 {
     public class ItemTypeEditorWindow : EditorWindow
     {
-        [MenuItem("Window/Systems/Item System/Item Type Editor %#W")]
+        [MenuItem("Window/Systems/Item System/Item Type Editor")]
         static public void ShowWindow()
         {
             var window = GetWindow<ItemTypeEditorWindow>();
             window.minSize = new Vector2(SystemsConfig.EDITOR_MIN_WINDOW_WIDTH, SystemsConfig.EDITOR_MIN_WINDOW_HEIGHT);
-            window.titleContent.text = "Item System - Item Types";
+            window.titleContent.text = "Item Types";
             window.Show();
         }
 
@@ -46,6 +46,7 @@ namespace Systems.ItemSystem.Editor
             ItemTypeDatabase.Instance.Add(new ItemTypeAsset(ItemTypeDatabase.Instance.GetNextId(), "Weapon"));
             ItemTypeDatabase.Instance.Add(new ItemTypeAsset(ItemTypeDatabase.Instance.GetNextId(), "Consumable"));
             ItemTypeDatabase.Instance.Add(new ItemTypeAsset(ItemTypeDatabase.Instance.GetNextId(), "Quest"));
+            ItemTypeGenerator.CheckAndGenerateFile();
         }
 
         public void OnGUI()
@@ -86,7 +87,7 @@ namespace Systems.ItemSystem.Editor
                         GUILayout.BeginHorizontal();
                         //SPRITE ON LEFT OF HORIZONTAL
                         GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
-                        GUILayout.Label("Item Type Sprite", GUILayout.Width(72));
+                        GUILayout.Label("Item Emblem", GUILayout.Width(72));
                         asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
                         GUILayout.EndVertical();   //end vertical
 
@@ -98,8 +99,8 @@ namespace Systems.ItemSystem.Editor
                         GUILayout.Label(asset.Name);
                         GUILayout.EndHorizontal();
                         GUILayout.BeginHorizontal();
-                        GUILayout.Label("Short Name", GUILayout.Width(80));
-                        asset.ShortName = EditorGUILayout.TextField(asset.ShortName);
+                        GUILayout.Label("Alias", GUILayout.Width(80));
+                        asset.Alias = EditorGUILayout.TextField(asset.Alias);
                         GUILayout.EndHorizontal();
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Description", GUILayout.Width(80));

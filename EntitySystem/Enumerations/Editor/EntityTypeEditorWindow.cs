@@ -7,12 +7,12 @@ namespace Systems.EntitySystem.Editor
 {
     public class EntityTypeEditorWindow : EditorWindow
     {
-        [MenuItem("Window/Systems/Entity System/Entity Type Editor %#W")]
+        [MenuItem("Window/Systems/Entity System/Entity Type Editor")]
         static public void ShowWindow()
         {
             var window = GetWindow<EntityTypeEditorWindow>();
             window.minSize = new Vector2(SystemsConfig.EDITOR_MIN_WINDOW_WIDTH, SystemsConfig.EDITOR_MIN_WINDOW_HEIGHT);
-            window.titleContent.text = "Entity System - Entity Types";
+            window.titleContent.text = "Entity Types";
             window.Show();
         }
 
@@ -81,7 +81,7 @@ namespace Systems.EntitySystem.Editor
                         GUILayout.BeginHorizontal();
                         //SPRITE ON LEFT OF HORIZONTAL
                         GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
-                        GUILayout.Label("Entity Type Sprite", GUILayout.Width(72));
+                        GUILayout.Label("Entity Emblem", GUILayout.Width(75));
                         asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
                         GUILayout.EndVertical();   //end vertical
 
@@ -93,8 +93,8 @@ namespace Systems.EntitySystem.Editor
                         asset.Name = EditorGUILayout.TextField(asset.Name);
                         GUILayout.EndHorizontal();
                         GUILayout.BeginHorizontal();
-                        GUILayout.Label("Short Name", GUILayout.Width(80));
-                        asset.ShortName = EditorGUILayout.TextField(asset.ShortName);
+                        GUILayout.Label("Alias", GUILayout.Width(80));
+                        asset.Alias = EditorGUILayout.TextField(asset.Alias);
                         GUILayout.EndHorizontal();
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Description", GUILayout.Width(80));

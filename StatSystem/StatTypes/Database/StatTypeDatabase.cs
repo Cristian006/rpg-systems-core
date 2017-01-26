@@ -36,6 +36,11 @@ namespace Systems.StatSystem.Database
             return Instance.GetByID(id);
         }
 
+        static public StatTypeAsset GetByType(StatType sT)
+        {
+            return Instance.GetByName(sT.ToString());
+        }
+
         static public int GetAssetCount()
         {
             return Instance.Count;

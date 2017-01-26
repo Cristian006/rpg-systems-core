@@ -13,7 +13,7 @@ namespace Systems.EntitySystem.Editor
         {
             var window = GetWindow<EntityEditor>();
             window.minSize = new Vector2(SystemsConfig.EDITOR_MIN_WINDOW_WIDTH, SystemsConfig.EDITOR_MIN_WINDOW_HEIGHT);
-            window.titleContent.text = "Entity System";
+            window.titleContent.text = "Entity Editor";
             window.Show();
         }
 
