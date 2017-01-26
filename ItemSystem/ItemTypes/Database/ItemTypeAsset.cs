@@ -7,7 +7,7 @@ namespace Systems.ItemSystem.Database
     public class ItemTypeAsset : BaseDatabaseAsset
     {
         [SerializeField]
-        private string _shortName;
+        private string _alias;
 
         [SerializeField]
         private string _description;
@@ -15,16 +15,16 @@ namespace Systems.ItemSystem.Database
         [SerializeField]
         private Sprite _icon;
 
-        public string ShortName
+        public string Alias
         {
             get
             {
-                return _shortName;
+                return _alias;
             }
 
             set
             {
-                _shortName = value;
+                _alias = value;
             }
         }
 
@@ -56,28 +56,28 @@ namespace Systems.ItemSystem.Database
 
         public ItemTypeAsset() : base()
         {
-            this.ShortName = string.Empty;
+            this.Alias = string.Empty;
             this.Description = string.Empty;
             this.Icon = null;
         }
 
         public ItemTypeAsset(int id) : base(id)
         {
-            this.ShortName = string.Empty;
+            this.Alias = string.Empty;
             this.Description = string.Empty;
             this.Icon = null;
         }
 
         public ItemTypeAsset(int id, string name) : base(id, name)
         {
-            this.ShortName = string.Empty;
+            this.Alias = string.Empty;
             this.Description = string.Empty;
             this.Icon = null;
         }
 
         public ItemTypeAsset(int id, string name, string shortName, string description, Sprite icon) : base(id, name)
         {
-            this.ShortName = shortName;
+            this.Alias = shortName;
             this.Description = description;
             this.Icon = icon;
         }
