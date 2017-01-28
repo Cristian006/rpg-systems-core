@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Systems.Config
+﻿namespace Systems.Config
 {
     public static class SystemsConfig
     {
         public static string PROJECT_NAMESPACE = "Byte.Utility";
+
+        public static int EDITOR_MIN_WINDOW_HEIGHT = 500;
+        public static int EDITOR_MIN_WINDOW_WIDTH = 500;
     }
 }

@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using Systems.Utility.Database;
 
-namespace Systems.StatSystem.Database
+namespace Systems.EntitySystem.Database
 {
     [System.Serializable]
-    public class StatTypeAsset : BaseDatabaseAsset
+    public class EntityTypeAsset : BaseDatabaseAsset
     {
         [SerializeField]
         private string _alias;
@@ -54,28 +54,28 @@ namespace Systems.StatSystem.Database
             }
         }
 
-        public StatTypeAsset() : base()
+        public EntityTypeAsset() : base()
         {
             this.Alias = string.Empty;
             this.Description = string.Empty;
             this.Icon = null;
         }
 
-        public StatTypeAsset(int id) : base(id)
+        public EntityTypeAsset(int id) : base(id)
         {
             this.Alias = string.Empty;
             this.Description = string.Empty;
             this.Icon = null;
         }
 
-        public StatTypeAsset(int id, string name) : base(id, name)
+        public EntityTypeAsset(int id, string name) : base(id, name)
         {
             this.Alias = string.Empty;
             this.Description = string.Empty;
             this.Icon = null;
         }
 
-        public StatTypeAsset(int id, string name, string shortName, string description, Sprite icon) : base(id, name)
+        public EntityTypeAsset(int id, string name, string shortName, string description, Sprite icon) : base(id, name)
         {
             this.Alias = shortName;
             this.Description = description;

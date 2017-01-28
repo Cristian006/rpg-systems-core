@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using Systems.ItemSystem;
 using Systems.Utility.Database.Interfaces;
-using System;
 
-namespace Systems.InventorySystem
+namespace Systems.ItemSystem.InventorySystem
 {
     public class InventoryList<T> : IDatabaseMethods<T> where T : Item
     {

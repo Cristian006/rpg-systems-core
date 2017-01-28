@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using Systems.Utility.Database;
+﻿using Systems.Utility.Database;
 
-namespace Systems.StatSystem
+namespace Systems.StatSystem.Database
 {
     public class StatTypeDatabase : BaseDatabase<StatTypeAsset>
     {
@@ -36,6 +34,11 @@ namespace Systems.StatSystem
         static public StatTypeAsset GetAsset(int id)
         {
             return Instance.GetByID(id);
+        }
+
+        static public StatTypeAsset GetByType(StatType sT)
+        {
+            return Instance.GetByName(sT.ToString());
         }
 
         static public int GetAssetCount()
