@@ -383,7 +383,7 @@ namespace Systems.ItemSystem.InventorySystem
 
         public void Equip<T>(T item, int index) where T : Item
         {
-            Equip<T>(item, index, true);
+            Equip(item, index, true);
         }
 
         public void Equip(Item item, bool equip = true)
@@ -404,7 +404,23 @@ namespace Systems.ItemSystem.InventorySystem
 
         public void Equip<T>(int index, bool equip = true) where T : Item
         {
-            Equip<T>(GetAt<T>(index), index, equip);
+            Equip(GetAt<T>(index), index, equip);
+        }
+
+        public void Equip<T>(bool primary)
+        {
+            if (primary)
+            {
+                PrimaryIndex = -1;
+                TriggerPrimaryChange();
+                TriggerOnEquippedChange();
+            }
+            else
+            {
+                SecondaryIndex = -1;
+                TriggerSecondaryChange();
+                TriggerOnEquippedChange();
+            }
         }
         #endregion
 
