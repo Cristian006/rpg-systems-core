@@ -8,14 +8,14 @@ namespace Systems.Utility.Editor
 {
     public static class ConstantsGenerator
     {
-        [MenuItem("Edit/Systems/Generate Constants.cs")]
+        [MenuItem("Edit/Systems/Generate UnityConstants.cs")]
         public static void Generate()
         {
             // Try to find an existing file in the project called "UnityConstants.cs"
             string filePath = string.Empty;
             foreach (var file in Directory.GetFiles(Application.dataPath, "*.cs", SearchOption.AllDirectories))
             {
-                if (Path.GetFileNameWithoutExtension(file) == "Constants")
+                if (Path.GetFileNameWithoutExtension(file) == "UnityConstants")
                 {
                     filePath = file;
                     break;
@@ -25,7 +25,7 @@ namespace Systems.Utility.Editor
             // If no such file exists already, use the save panel to get a folder in which the file will be placed.
             if (string.IsNullOrEmpty(filePath))
             {
-                string directory = EditorUtility.OpenFolderPanel("Choose location for Constants.cs", Application.dataPath, "");
+                string directory = EditorUtility.OpenFolderPanel("Choose location for UnityConstants.cs", Application.dataPath, "");
 
                 // Canceled choose? Do nothing.
                 if (string.IsNullOrEmpty(directory))
@@ -33,7 +33,7 @@ namespace Systems.Utility.Editor
                     return;
                 }
 
-                filePath = Path.Combine(directory, "Constants.cs");
+                filePath = Path.Combine(directory, "UnityConstants.cs");
             }
 
             // Write out our file
@@ -41,7 +41,7 @@ namespace Systems.Utility.Editor
             {
                 writer.WriteLine("// This file is auto-generated. Modifications are not saved.");
                 writer.WriteLine();
-                writer.WriteLine("namespace " + Config.SystemsConfig.PROJECT_NAMESPACE + ".UnityConstants");
+                writer.WriteLine("namespace " + Config.SystemsConfig.PROJECT_NAMESPACE + ".Constants");
                 writer.WriteLine("{");
 
                 // Write out the tags
