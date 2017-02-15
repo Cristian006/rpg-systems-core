@@ -155,14 +155,17 @@ namespace Systems.ItemSystem.Editor
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Stackable", GUILayout.Width(80));
                         GUILayout.BeginVertical();
-                        asset.Stackable = EditorGUILayout.BeginToggleGroup("Enabled", asset.Stackable);
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Stack Size", GUILayout.Width(80));
-                        asset.StackSize = EditorGUILayout.IntSlider(asset.StackSize, 2, 64);
-                        GUILayout.EndHorizontal();
+                        asset.Stackable = EditorGUILayout.Toggle(asset.Stackable);
+                        if (asset.Stackable)
+                        {
+                            GUILayout.Box("Set the weight of the item to the weight of what would be a full stack", EditorStyles.helpBox);
+                            GUILayout.BeginHorizontal();
+                            GUILayout.Label("Stack Size", GUILayout.Width(80));
+                            asset.StackSize = EditorGUILayout.IntSlider(asset.StackSize, 2, 99);
+                            GUILayout.EndHorizontal();
+                        }
                         GUILayout.EndVertical();
                         GUILayout.EndHorizontal();
-                        EditorGUILayout.EndToggleGroup();
 
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Level", GUILayout.Width(80));
@@ -181,25 +184,56 @@ namespace Systems.ItemSystem.Editor
                         asset.WType = (WeaponType)EditorGUILayout.EnumPopup(asset.WType);
                         GUILayout.EndHorizontal();
 
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Durability", GUILayout.Width(80));
-                        asset.Durability = EditorGUILayout.IntField(asset.Durability);
-                        GUILayout.EndHorizontal();
+                        switch (asset.WType)
+                        {
+                            case WeaponType.Primary:
+                            case WeaponType.Secondary:
+                                GUILayout.BeginHorizontal();
+                                GUILayout.Label("Durability", GUILayout.Width(80));
+                                asset.Durability = EditorGUILayout.IntField(asset.Durability);
+                                GUILayout.EndHorizontal();
 
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Attack Range", GUILayout.Width(80));
-                        asset.AttackRange = EditorGUILayout.IntSlider(asset.AttackRange, 1, 20);
-                        GUILayout.EndHorizontal();
+                                GUILayout.BeginHorizontal();
+                                GUILayout.Label("Attack Range", GUILayout.Width(80));
+                                asset.AttackRange = EditorGUILayout.IntSlider(asset.AttackRange, 1, 20);
+                                GUILayout.EndHorizontal();
 
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Weap Dmg", GUILayout.Width(80));
-                        asset.WeaponDamage = EditorGUILayout.IntSlider(asset.WeaponDamage, 0, 99);
-                        GUILayout.EndHorizontal();
+                                GUILayout.BeginHorizontal();
+                                GUILayout.Label("Weap Dmg", GUILayout.Width(80));
+                                asset.WeaponDamage = EditorGUILayout.IntSlider(asset.WeaponDamage, 0, 99);
+                                GUILayout.EndHorizontal();
+                                break;
+                            case WeaponType.Throwable:
+                                
+                                GUILayout.BeginHorizontal();
+                                GUILayout.Label("Throwable Type", GUILayout.Width(80));
+                                asset.TType = (ThrowableType)EditorGUILayout.EnumPopup(asset.TType);
+                                GUILayout.EndHorizontal();
 
+                                GUILayout.BeginHorizontal();
+                                GUILayout.Label("Object Force", GUILayout.Width(80));
+                                asset.Force = EditorGUILayout.FloatField(asset.Force);
+                                GUILayout.EndHorizontal();
+
+                                GUILayout.BeginHorizontal();
+                                GUILayout.Label("Durability", GUILayout.Width(80));
+                                asset.Durability = EditorGUILayout.IntField(asset.Durability);
+                                GUILayout.EndHorizontal();
+
+                                GUILayout.BeginHorizontal();
+                                GUILayout.Label("Weap Dmg", GUILayout.Width(80));
+                                asset.WeaponDamage = EditorGUILayout.IntSlider(asset.WeaponDamage, 0, 99);
+                                GUILayout.EndHorizontal();
+                                break;
+                            default:
+                                break;
+                        }
+
+                        GUILayout.Space(10);
                         GUILayout.EndVertical();
 
                         GUILayout.EndHorizontal();
-
+                        
                         GUILayout.EndVertical();
                         if (EditorGUI.EndChangeCheck())
                         {

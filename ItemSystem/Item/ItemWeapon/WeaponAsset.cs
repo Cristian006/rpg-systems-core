@@ -16,6 +16,10 @@ namespace Systems.ItemSystem
         private int _attackRange;
         [SerializeField]
         private int _weaponDamage;
+        [SerializeField]
+        private ThrowableType _tType;
+        [SerializeField]
+        private float _force;
 
         private int _currentDurablity;
 
@@ -72,6 +76,18 @@ namespace Systems.ItemSystem
             }
         }
 
+        public ThrowableType TType
+        {
+            get
+            {
+                return _tType;
+            }
+            set
+            {
+                _tType = value;
+            }
+        }
+
         public int AttackRange
         {
             get
@@ -82,6 +98,18 @@ namespace Systems.ItemSystem
             set
             {
                 _attackRange = value;
+            }
+        }
+
+        public float Force
+        {
+            get
+            {
+                return _force;
+            }
+            set
+            {
+                _force = value;
             }
         }
 
@@ -139,7 +167,7 @@ namespace Systems.ItemSystem
             this.WeaponDamage = 0;
         }
 
-        public WeaponAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost, int durability, bool equipable, WeaponType wType, int attackRange, int weaponDamage) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
+        public WeaponAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost, int durability, bool equipable, WeaponType wType, int attackRange, int weaponDamage, float force) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
         {
             this.Durability = durability;
             this.Equipable = equipable;
@@ -147,6 +175,7 @@ namespace Systems.ItemSystem
             this.WType = wType;
             this.AttackRange = attackRange;
             this.WeaponDamage = weaponDamage;
+            this.Force = force;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Systems.ItemSystem
         private int _damage;
         private bool _equipable;
         private WeaponType _weaponType;
+        private float _force;
 
         #region GETTERS AND SETTERS
         public int CurrentDurability
@@ -61,6 +62,22 @@ namespace Systems.ItemSystem
             {
                 return _equipable;
             }
+            protected set
+            {
+                _equipable = value;
+            }
+        }
+
+        public float Force
+        {
+            get
+            {
+                return _force;
+            }
+            protected set
+            {
+                _force = value;
+            }
         }
 
         public WeaponType WeaponType
@@ -70,7 +87,7 @@ namespace Systems.ItemSystem
                 return _weaponType;
             }
 
-            set
+            protected set
             {
                 _weaponType = value;
             }
@@ -82,6 +99,7 @@ namespace Systems.ItemSystem
             this.Durability = wa.Durability;
             this.WeaponType = wa.WType;
             this.Damage = wa.WeaponDamage;
+            this.Force = wa.Force;
         }
 
         public void Break()

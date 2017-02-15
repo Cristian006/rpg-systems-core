@@ -407,7 +407,7 @@ namespace Systems.ItemSystem.InventorySystem
             Equip(GetAt<T>(index), index, equip);
         }
 
-        public void Equip<T>(bool primary)
+        public void UnEquip(bool primary)
         {
             if (primary)
             {
