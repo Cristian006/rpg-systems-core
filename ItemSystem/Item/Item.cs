@@ -15,6 +15,7 @@ namespace Systems.ItemSystem
         private int _weight;
         private bool _stackable;
         private int _stackSize;
+        private int _maxStack;
         private Sprite _icon;
         private int _level;
         private int _cost;
@@ -74,6 +75,11 @@ namespace Systems.ItemSystem
         {
             get
             {
+                if (Stackable)
+                {
+                    float norm = _weight / MaxStack;
+                    return Mathf.CeilToInt(StackSize * norm);
+                }
                 return _weight;
             }
 
@@ -115,10 +121,21 @@ namespace Systems.ItemSystem
             {
                 return _stackSize;
             }
-
             set
             {
                 _stackSize = value;
+            }
+        }
+
+        public int MaxStack
+        {
+            get
+            {
+                return _maxStack;
+            }
+            set
+            {
+                _maxStack = value;
             }
         }
         #endregion
@@ -126,7 +143,7 @@ namespace Systems.ItemSystem
         #region CONSTRUCTORS
         public Item()
         {
-
+            //Empty Constructor
         }
 
         public Item(ItemAsset ia)
@@ -137,7 +154,7 @@ namespace Systems.ItemSystem
             Weight = ia.Weight;
             Description = ia.Description;
             Stackable = ia.Stackable;
-            StackSize = ia.StackSize;
+            MaxStack = ia.StackSize;
             Icon = ia.Icon;
             Level = ia.Level;
             Cost = ia.Cost;

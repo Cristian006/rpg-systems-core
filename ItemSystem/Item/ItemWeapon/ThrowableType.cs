@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// THIS IS A GENERATED FILE
 /// ANY EDITS WILL BE DELETED ON NEXT GENERATION
 /// Generated Enum that can be used to easily select a ThrowableType from the ThrowableTypeDatabase.

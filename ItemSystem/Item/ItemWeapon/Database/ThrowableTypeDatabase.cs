@@ -4,7 +4,7 @@ namespace Systems.ItemSystem.Database
 {
     public class ThrowableTypeDatabase : BaseDatabase<ThrowableTypeAsset>
     {
-        const string DatabasePath = @"Resources/Systems/ItemSystem/Database/";
+        const string DatabasePath = @"Resources/Systems/ItemSystem/Databases/";
         const string DatabaseName = @"ThrowableTypeDatabase.asset";
 
         private static ThrowableTypeDatabase _instance = null;

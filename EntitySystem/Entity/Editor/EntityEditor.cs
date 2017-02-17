@@ -80,6 +80,7 @@ namespace Systems.EntitySystem.Editor
                         //START OF SELECTED VIEW
                         GUILayout.BeginVertical("Box");  //a
                         GUILayout.BeginHorizontal();     //b
+
                         //SPRITE ON LEFT OF HORIZONTAL
                         GUILayout.BeginVertical(GUILayout.Width(75)); //c
                         GUILayout.Label("Entity Icon", GUILayout.Width(72));
@@ -92,10 +93,12 @@ namespace Systems.EntitySystem.Editor
                         GUILayout.Label("Name", GUILayout.Width(80));
                         asset.Name = EditorGUILayout.TextField(asset.Name);
                         GUILayout.EndHorizontal();   //e
+
                         GUILayout.BeginHorizontal(); //f
                         GUILayout.Label("Description", GUILayout.Width(80));
                         asset.Description = EditorGUILayout.TextArea(asset.Description, GUILayout.MinHeight(50));
                         GUILayout.EndHorizontal(); //f
+
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Entity Class", GUILayout.Width(80));
                         asset.EClass = (EntityType)EditorGUILayout.EnumPopup(asset.EClass);
@@ -111,48 +114,23 @@ namespace Systems.EntitySystem.Editor
                         asset.StartLevel = (int)EditorGUILayout.IntSlider(asset.StartLevel,0, 99);
                         GUILayout.EndHorizontal();
 
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("Cost", GUILayout.Width(80));
+                        asset.Cost = EditorGUILayout.IntField(asset.Cost);
+                        GUILayout.EndHorizontal();
+
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("Locked", GUILayout.Width(80));
+                        asset.Locked = EditorGUILayout.Toggle(asset.Locked);
+                        GUILayout.EndHorizontal();
+
                         GUILayout.Space(10);
-
-                        GUILayout.BeginVertical("Box");
-
-                        GUILayout.Label(string.Format("Defualt Inventory: Contains {0} Item(s)", asset.DefualtInventory.Count));
-
-                        GUILayout.Space(2);
-
-                        for (int d = 0; d < asset.DefualtInventory.Count; d++)
-                        {
-                            GUILayout.BeginHorizontal(EditorStyles.helpBox);
-                            GUILayout.Label(string.Format("Default Item {0}:", d.ToString("D2"), GUILayout.Width(60)));
-                            asset.DefualtInventory[d] = EditorGUILayout.TextField(asset.DefualtInventory[d], GUILayout.MinWidth(350));
-                            GUILayout.FlexibleSpace();
-                            if (GUILayout.Button("x", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Item", "Are you sure you want to delete " + asset.DefualtInventory[d] + " Item?", "Delete", "Cancel"))
-                            {
-                                asset.DefualtInventory.RemoveAt(d);
-                            }
-
-                            GUILayout.EndHorizontal();
-                        }
-                        GUILayout.EndVertical();
-
-                        GUILayout.Space(20);
-
-                        
-
 
                         GUILayout.EndVertical();  //d
                         GUILayout.EndHorizontal();  //b
 
-                        GUILayout.BeginHorizontal();
-                        if (GUILayout.Button("Add Defualt Item to Inventory", EditorStyles.toolbarButton))
-                        {
-                            asset.DefualtInventory.Add("");
-                        }
-                        GUILayout.EndHorizontal();
-
                         GUILayout.EndVertical();  //a
-
                         
-
                         if (EditorGUI.EndChangeCheck())
                         {
                             EditorUtility.SetDirty(EntityDatabase.Instance);

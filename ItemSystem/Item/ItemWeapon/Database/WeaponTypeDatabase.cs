@@ -2,20 +2,20 @@
 
 namespace Systems.ItemSystem.Database
 {
-    public class ItemTypeDatabase : BaseDatabase<ItemTypeAsset>
+    public class WeaponTypeDatabase : BaseDatabase<WeaponTypeAsset>
     {
         const string DatabasePath = @"Resources/Systems/ItemSystem/Databases/";
-        const string DatabaseName = @"ItemTypeDatabase.asset";
+        const string DatabaseName = @"WeaponTypeDatabase.asset";
 
-        private static ItemTypeDatabase _instance = null;
+        private static WeaponTypeDatabase _instance = null;
 
-        public static ItemTypeDatabase Instance
+        public static WeaponTypeDatabase Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = GetDatabase<ItemTypeDatabase>(DatabasePath, DatabaseName);
+                    _instance = GetDatabase<WeaponTypeDatabase>(DatabasePath, DatabaseName);
                 }
                 return _instance;
             }
@@ -26,12 +26,12 @@ namespace Systems.ItemSystem.Database
             }
         }
 
-        static public ItemTypeAsset GetAt(int index)
+        static public WeaponTypeAsset GetAt(int index)
         {
             return Instance.GetAtIndex(index);
         }
 
-        static public ItemTypeAsset GetAsset(int id)
+        static public WeaponTypeAsset GetAsset(int id)
         {
             return Instance.GetByID(id);
         }

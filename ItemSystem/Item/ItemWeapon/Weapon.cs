@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using Systems.ItemSystem.Interfaces;
+﻿using Systems.ItemSystem.Interfaces;
 
 namespace Systems.ItemSystem
 {
@@ -11,7 +9,6 @@ namespace Systems.ItemSystem
         private int _damage;
         private bool _equipable;
         private WeaponType _weaponType;
-        private float _force;
 
         #region GETTERS AND SETTERS
         public int CurrentDurability
@@ -68,18 +65,6 @@ namespace Systems.ItemSystem
             }
         }
 
-        public float Force
-        {
-            get
-            {
-                return _force;
-            }
-            protected set
-            {
-                _force = value;
-            }
-        }
-
         public WeaponType WeaponType
         {
             get
@@ -94,12 +79,12 @@ namespace Systems.ItemSystem
         }
         #endregion
 
+
         public Weapon(WeaponAsset wa) : base((ItemAsset)wa)
         {
-            this.Durability = wa.Durability;
-            this.WeaponType = wa.WType;
-            this.Damage = wa.WeaponDamage;
-            this.Force = wa.Force;
+            Durability = wa.Durability;
+            WeaponType = wa.WType;
+            Damage = wa.WeaponDamage;
         }
 
         public void Break()

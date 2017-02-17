@@ -13,20 +13,21 @@ namespace Systems.EntitySystem.Database
         [SerializeField]
         string description;
         [SerializeField]
-        List<string> defaultInventory;
-        [SerializeField]
         EntityType entityClass;
         [SerializeField]
         PlayerType playerType;
         [SerializeField]
         int startingLevel;
+        [SerializeField]
+        int cost;
+        [SerializeField]
+        bool locked;
 
         #region CONSTRUCTORS
         public EntityAsset() : base()
         {
             Icon = null;
             Description = string.Empty;
-            defaultInventory = new List<string>();
             EClass = EntityType.None;
             PType = PlayerType.None;
         }
@@ -35,7 +36,6 @@ namespace Systems.EntitySystem.Database
         {
             Icon = null;
             Description = string.Empty;
-            defaultInventory = new List<string>();
             EClass = EntityType.None;
             PType = PlayerType.None;
         }
@@ -44,7 +44,6 @@ namespace Systems.EntitySystem.Database
         {
             Icon = null;
             Description = string.Empty;
-            defaultInventory = new List<string>();
             EClass = EntityType.None;
             PType = PlayerType.None;
         }
@@ -53,28 +52,19 @@ namespace Systems.EntitySystem.Database
         {
             Icon = null;
             Description = description;
-            defaultInventory = new List<string>();
             EClass = entityClass;
             PType = playerType;
         }
-
-        public EntityAsset(int id, string name, string description, List<string> inventory, EntityType entityClass, PlayerType playerType) : base(id, name)
+        
+        public EntityAsset(int id, string name, string description, EntityType entityClass, PlayerType playerType, int startLevel, int cost, bool locked) : base(id, name)
         {
             Icon = null;
             Description = description;
-            defaultInventory = inventory;
-            EClass = entityClass;
-            PType = playerType;
-        }
-
-        public EntityAsset(int id, string name, string description, List<string> inventory, EntityType entityClass, PlayerType playerType, int startLevel) : base(id, name)
-        {
-            Icon = null;
-            Description = description;
-            defaultInventory = inventory;
             EClass = entityClass;
             PType = playerType;
             StartLevel = startLevel;
+            Cost = cost;
+            Locked = locked;
         }
         #endregion
 
@@ -96,18 +86,6 @@ namespace Systems.EntitySystem.Database
         {
             get { return icon; }
             set { icon = value; }
-        }
-
-        public List<string> DefualtInventory
-        {
-            get
-            {
-                return defaultInventory;
-            }
-            set
-            {
-                defaultInventory = value;
-            }
         }
 
         public EntityType EClass
@@ -147,7 +125,33 @@ namespace Systems.EntitySystem.Database
             {
                 startingLevel = value;
             }
-            #endregion
         }
+
+        public int Cost
+        {
+            get
+            {
+                return cost;
+            }
+
+            set
+            {
+                cost = value;
+            }
+        }
+
+        public bool Locked
+        {
+            get
+            {
+                return locked;
+            }
+
+            set
+            {
+                locked = value;
+            }
+        }
+        #endregion
     }
 }

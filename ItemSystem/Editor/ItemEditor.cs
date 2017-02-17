@@ -158,9 +158,9 @@ namespace Systems.ItemSystem.Editor
                         asset.Stackable = EditorGUILayout.Toggle(asset.Stackable);
                         if (asset.Stackable)
                         {
-                            GUILayout.Box("Set the weight of the item to the weight of what would be a full stack", EditorStyles.helpBox);
+                            GUILayout.Box("Set the weight of this item to be the weight of what would be a \"full stack\"", EditorStyles.helpBox);
                             GUILayout.BeginHorizontal();
-                            GUILayout.Label("Stack Size", GUILayout.Width(80));
+                            GUILayout.Label("Max Stack Size", GUILayout.Width(80));
                             asset.StackSize = EditorGUILayout.IntSlider(asset.StackSize, 2, 99);
                             GUILayout.EndHorizontal();
                         }

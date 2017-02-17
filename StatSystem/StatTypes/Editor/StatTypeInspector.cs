@@ -13,7 +13,7 @@ namespace Systems.StatSystem.Editor
 
             if (GUILayout.Button("Open Editor Window"))
             {
-                StatTypeEditorWindow.ShowWindow();
+                StatTypeEditor.ShowWindow();
             }
         }
     }

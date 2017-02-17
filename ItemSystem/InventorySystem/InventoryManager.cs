@@ -197,6 +197,7 @@ namespace Systems.ItemSystem.InventorySystem
         #endregion
 
         #region INVENTORY METHODS
+        //TODO: Add option to reject object if they already have a stack filled instead of creating an entirely different stack
         /// <summary>
         /// Add Item to inventory if there's enough room.
         /// </summary>
@@ -204,15 +205,51 @@ namespace Systems.ItemSystem.InventorySystem
         /// <param name="item"></param>
         public void Add<T>(T item) where T : Item
         {
-            if (item.Weight <= AvailableWeight)
+            if (item.Stackable)
             {
-                inventory.Objects<T>().Add(item);
-                TriggerOnItemAdded(true);
+                if (Contains<T>(item.ID))
+                {
+                    T i = GetBy<T>(item.ID);
+                    if (item.Weight <= AvailableWeight)
+                    {
+                        if (i.StackSize < i.MaxStack)
+                        {
+                            TriggerOnItemAdded(true);
+                            i.StackSize++;
+                            i = null;
+                            return;
+                        }
+                        else
+                        {
+                            inventory.Objects<T>().Add(item);
+                            TriggerOnItemAdded(true);
+                        }
+                    }
+                    else
+                    {
+                        TriggerOnItemAdded(false);
+                        i = null;
+                        return;
+                    }
+                }
+                else
+                {
+                    inventory.Objects<T>().Add(item);
+                    TriggerOnItemAdded(true);
+                }
             }
             else
             {
-                TriggerOnItemAdded(false);
-                Debug.Log("Cannot add anymore Items, too much weight!");
+                if (item.Weight <= AvailableWeight)
+                {
+                    inventory.Objects<T>().Add(item);
+                    TriggerOnItemAdded(true);
+                }
+                else
+                {
+                    TriggerOnItemAdded(false);
+                    Debug.Log("Cannot add anymore Items, too much weight!");
+                }
             }
         }
 
@@ -225,6 +262,11 @@ namespace Systems.ItemSystem.InventorySystem
         {
             if (item != null)
             {
+                if (isEquipped(item))
+                {
+                    Equip(item, false);
+                }
+
                 inventory.Objects<T>().Remove(item);
                 TriggerOnItemRemoved(true);
             }
@@ -299,28 +341,7 @@ namespace Systems.ItemSystem.InventorySystem
         #endregion
 
         #region EQUIPPING METHODS
-        //check if there is another weapon in inventory to equip
-        public bool checkForWeapon(bool primary)
-        {
-            int currentIndex = primary ? (PrimarySlotEquipped ? PrimaryIndex : 0) : (SecondarySlotEquipped ? SecondaryIndex : 0);
-
-            int inventoryCount = inventory.Count;
-
-            for (int i = currentIndex + 1; i < (inventoryCount * 2); i++)
-            {
-                int ii = (i % inventoryCount);
-                if (Weapons.Objects[(ii)].IType == ItemType.Weapon)
-                {
-                    if (((Weapon)Weapons.Objects[(ii)]).WeaponType == (primary ? WeaponType.Primary : WeaponType.Secondary))
-                    {
-                        return ii == currentIndex ? false : true;
-                    }
-                }
-            }
-            return false;
-        }
-        
-        public bool isEquipped(Item item)
+        public virtual bool isEquipped(Item item)
         {
             switch (item.IType)
             {
@@ -342,6 +363,27 @@ namespace Systems.ItemSystem.InventorySystem
             }
         }
 
+        public void Equip<T>(int index, bool equip = true) where T : Item
+        {
+            Equip(GetAt<T>(index), index, equip);
+        }
+
+        public void Equip(Item item, bool equip = true)
+        {
+            switch (item.IType)
+            {
+                case ItemType.Weapon:
+                    Equip<Weapon>((Weapon)item, Weapons.Objects.IndexOf((Weapon)item), equip);
+                    break;
+                case ItemType.Consumable:
+                    Equip<Consumable>((Consumable)item, Consumables.Objects.IndexOf((Consumable)item), equip);
+                    break;
+                case ItemType.Quest:
+                    Equip<QuestItem>((QuestItem)item, QuestItems.Objects.IndexOf((QuestItem)item), equip);
+                    break;
+            }
+        }
+        
         /// <summary>
         /// Equip an Item
         /// false to unequip
@@ -350,7 +392,7 @@ namespace Systems.ItemSystem.InventorySystem
         /// <param name="item"></param>
         /// <param name="index"></param>
         /// <param name="equip"></param>
-        public void Equip<T>(T item, int index, bool equip) where T : Item
+        public virtual void Equip<T>(T item, int index, bool equip) where T : Item
         {
             if (item.IType == ItemType.Weapon)
             {
@@ -381,32 +423,6 @@ namespace Systems.ItemSystem.InventorySystem
             }
         }
 
-        public void Equip<T>(T item, int index) where T : Item
-        {
-            Equip(item, index, true);
-        }
-
-        public void Equip(Item item, bool equip = true)
-        {
-            switch (item.IType)
-            {
-                case ItemType.Weapon:
-                    Equip<Weapon>((Weapon)item, Weapons.Objects.IndexOf((Weapon)item), equip);
-                    break;
-                case ItemType.Consumable:
-                    Equip<Consumable>((Consumable)item, Consumables.Objects.IndexOf((Consumable)item), equip);
-                    break;
-                case ItemType.Quest:
-                    Equip<QuestItem>((QuestItem)item, QuestItems.Objects.IndexOf((QuestItem)item), equip);
-                    break;
-            }
-        }
-
-        public void Equip<T>(int index, bool equip = true) where T : Item
-        {
-            Equip(GetAt<T>(index), index, equip);
-        }
-
         public void UnEquip(bool primary)
         {
             if (primary)
@@ -425,21 +441,23 @@ namespace Systems.ItemSystem.InventorySystem
         #endregion
 
         #region EVENT HANDLERS
-        void TriggerPrimaryChange()
+        protected void TriggerPrimaryChange()
         {
             if (OnPrimaryChange != null)
             {
                 OnPrimaryChange(this, null);
             }
         }
-        void TriggerSecondaryChange()
+
+        protected void TriggerSecondaryChange()
         {
             if (OnSecondaryChange != null)
             {
                 OnSecondaryChange(this, null);
             }
         }
-        void TriggerTertiaryChange()
+
+        protected void TriggerTertiaryChange()
         {
             if (OnTertiaryChange != null)
             {
@@ -447,7 +465,7 @@ namespace Systems.ItemSystem.InventorySystem
             }
         }
 
-        void TriggerOnItemAdded(bool itemWasAdded)
+        protected void TriggerOnItemAdded(bool itemWasAdded)
         {
             if (itemWasAdded)
             {
@@ -467,7 +485,7 @@ namespace Systems.ItemSystem.InventorySystem
 
         }
 
-        void TriggerOnItemRemoved(bool itemWasRemoved)
+        protected void TriggerOnItemRemoved(bool itemWasRemoved)
         {
             if (itemWasRemoved)
             {
@@ -487,7 +505,7 @@ namespace Systems.ItemSystem.InventorySystem
 
         }
 
-        void TriggerInventoryChange()
+        protected void TriggerInventoryChange()
         {
             if (OnInventoryChange != null)
             {
@@ -495,7 +513,7 @@ namespace Systems.ItemSystem.InventorySystem
             }
         }
 
-        void TriggerOnEquippedChange()
+        protected void TriggerOnEquippedChange()
         {
             if (OnEquippedChange != null)
             {

@@ -1,26 +1,25 @@
 ﻿using Systems.Utility.Database;
 
-namespace Systems.EntitySystem.Database
+namespace Systems.ItemSystem.InventorySystem.Database
 {
-    public class EntityDatabase : BaseDatabase<EntityAsset>
+    public class InventoryDatabase : BaseDatabase<InventoryAsset>
     {
-        const string DatabasePath = @"Resources/Systems/EntitySystem/Databases/";
-        const string DatabaseName = @"EntityDatabase.asset";
+        const string DatabasePath = @"Resources/Systems/ItemSystem/Databases/";
+        const string DatabaseName = @"InventoryDatabase.asset";
 
-        private static EntityDatabase _instance = null;
+        private static InventoryDatabase _instance = null;
 
-        public static EntityDatabase Instance
+        public static InventoryDatabase Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = GetDatabase<EntityDatabase>(DatabasePath, DatabaseName);
+                    _instance = GetDatabase<InventoryDatabase>(DatabasePath, DatabaseName);
                 }
                 return _instance;
             }
         }
-
 
         public static bool ContainsAsset(string name)
         {
@@ -32,17 +31,17 @@ namespace Systems.EntitySystem.Database
             return Instance.Contains(id);
         }
 
-        static public EntityAsset GetAt(int index)
+        static public InventoryAsset GetAt(int index)
         {
             return Instance.GetAtIndex(index);
         }
 
-        static public EntityAsset GetAsset(int id)
+        static public InventoryAsset GetAsset(int id)
         {
             return Instance.GetByID(id);
         }
 
-        static public EntityAsset GetAsset(string name)
+        static public InventoryAsset GetAsset(string name)
         {
             return Instance.GetByName(name);
         }
@@ -50,11 +49,6 @@ namespace Systems.EntitySystem.Database
         static public int GetAssetCount()
         {
             return Instance.Count;
-        }
-
-        static public EntityData GetDataFromAsset(EntityAsset entityAsset)
-        {
-            return new EntityData(entityAsset);
         }
     }
 }
