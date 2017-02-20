@@ -15,7 +15,7 @@ namespace Systems.ItemSystem.Editor
             window.titleContent.text = "Item Editor";
             window.Show();
         }
-
+        
         private Vector2 scrollPosition;
         private int activeID;
 
@@ -82,7 +82,7 @@ namespace Systems.ItemSystem.Editor
             GUILayout.EndHorizontal();
         }
 
-        public void Weapons()
+        public virtual void Weapons()
         {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
@@ -184,51 +184,8 @@ namespace Systems.ItemSystem.Editor
                         asset.WType = (WeaponType)EditorGUILayout.EnumPopup(asset.WType);
                         GUILayout.EndHorizontal();
 
-                        switch (asset.WType)
-                        {
-                            case WeaponType.Primary:
-                            case WeaponType.Secondary:
-                                GUILayout.BeginHorizontal();
-                                GUILayout.Label("Durability", GUILayout.Width(80));
-                                asset.Durability = EditorGUILayout.IntField(asset.Durability);
-                                GUILayout.EndHorizontal();
-
-                                GUILayout.BeginHorizontal();
-                                GUILayout.Label("Attack Range", GUILayout.Width(80));
-                                asset.AttackRange = EditorGUILayout.IntSlider(asset.AttackRange, 1, 20);
-                                GUILayout.EndHorizontal();
-
-                                GUILayout.BeginHorizontal();
-                                GUILayout.Label("Weap Dmg", GUILayout.Width(80));
-                                asset.WeaponDamage = EditorGUILayout.IntSlider(asset.WeaponDamage, 0, 99);
-                                GUILayout.EndHorizontal();
-                                break;
-                            case WeaponType.Throwable:
-                                
-                                GUILayout.BeginHorizontal();
-                                GUILayout.Label("Throwable Type", GUILayout.Width(80));
-                                asset.TType = (ThrowableType)EditorGUILayout.EnumPopup(asset.TType);
-                                GUILayout.EndHorizontal();
-
-                                GUILayout.BeginHorizontal();
-                                GUILayout.Label("Object Force", GUILayout.Width(80));
-                                asset.Force = EditorGUILayout.FloatField(asset.Force);
-                                GUILayout.EndHorizontal();
-
-                                GUILayout.BeginHorizontal();
-                                GUILayout.Label("Durability", GUILayout.Width(80));
-                                asset.Durability = EditorGUILayout.IntField(asset.Durability);
-                                GUILayout.EndHorizontal();
-
-                                GUILayout.BeginHorizontal();
-                                GUILayout.Label("Weap Dmg", GUILayout.Width(80));
-                                asset.WeaponDamage = EditorGUILayout.IntSlider(asset.WeaponDamage, 0, 99);
-                                GUILayout.EndHorizontal();
-                                break;
-                            default:
-                                break;
-                        }
-
+                        switchWeaponType(asset);
+                        
                         GUILayout.Space(10);
                         GUILayout.EndVertical();
 
@@ -245,7 +202,15 @@ namespace Systems.ItemSystem.Editor
             GUILayout.EndScrollView();
         }
 
-        public void Consumables()
+        partial void switchWeaponType(WeaponAsset asset);
+
+        partial void Primary(WeaponAsset asset);
+        
+        partial void Secondary(WeaponAsset asset);
+
+        partial void Throw(WeaponAsset asset);
+
+        public virtual void Consumables()
         {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
@@ -364,7 +329,7 @@ namespace Systems.ItemSystem.Editor
             GUILayout.EndScrollView();
         }
 
-        public void QuestItems()
+        public virtual void QuestItems()
         {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
@@ -472,7 +437,6 @@ namespace Systems.ItemSystem.Editor
             }
             GUILayout.EndScrollView();
         }
-
 
         public void About()
         {

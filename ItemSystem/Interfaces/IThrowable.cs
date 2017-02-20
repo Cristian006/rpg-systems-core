@@ -2,7 +2,6 @@
 {
     interface IThrowable
     {
-        ThrowableType ThrowType { get; set; }
         float Force { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace Systems.Utility.Editor
             {
                 writer.WriteLine("// This file is auto-generated. Modifications are not saved.");
                 writer.WriteLine();
-                writer.WriteLine("namespace " + Config.SystemsConfig.PROJECT_NAMESPACE + ".Constants");
+                writer.WriteLine("namespace " + Config.SystemsConfig.PROJECT_NAMESPACE + ".Utility.Constants");
                 writer.WriteLine("{");
 
                 // Write out the tags

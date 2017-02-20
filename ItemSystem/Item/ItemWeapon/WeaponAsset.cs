@@ -17,8 +17,6 @@ namespace Systems.ItemSystem
         [SerializeField]
         private int _weaponDamage;
         [SerializeField]
-        private ThrowableType _tType;
-        [SerializeField]
         private float _force;
 
         private int _currentDurablity;
@@ -73,18 +71,6 @@ namespace Systems.ItemSystem
             set
             {
                 _wType = value;
-            }
-        }
-
-        public ThrowableType TType
-        {
-            get
-            {
-                return _tType;
-            }
-            set
-            {
-                _tType = value;
             }
         }
 

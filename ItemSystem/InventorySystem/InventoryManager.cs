@@ -214,8 +214,8 @@ namespace Systems.ItemSystem.InventorySystem
                     {
                         if (i.StackSize < i.MaxStack)
                         {
-                            TriggerOnItemAdded(true);
                             i.StackSize++;
+                            TriggerOnItemAdded(true);
                             i = null;
                             return;
                         }
