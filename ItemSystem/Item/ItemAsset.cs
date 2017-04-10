@@ -12,7 +12,7 @@ namespace Systems.ItemSystem
         [SerializeField]
         private string _description;
         [SerializeField]
-        private int _weight;
+        private float _weight;
         [SerializeField]
         private bool _stackable;
         [SerializeField]
@@ -81,7 +81,7 @@ namespace Systems.ItemSystem
             }
         }
 
-        public int Weight
+        public float Weight
         {
             get
             {
@@ -137,7 +137,7 @@ namespace Systems.ItemSystem
             Cost = 0;
         }
 
-        public ItemAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost) : base(id, name)
+        public ItemAsset(int id, string name, float weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost) : base(id, name)
         {
             IType = ItemType.None;
             Weight = weight;

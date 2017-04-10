@@ -6,7 +6,7 @@ namespace Systems.ItemSystem
     {
         private int _durability;
         private int _currentDurablity;
-        private int _damage;
+        private int _power;
         private bool _equipable;
         private WeaponType _weaponType;
 
@@ -41,15 +41,15 @@ namespace Systems.ItemSystem
             }
         }
 
-        public int Damage
+        public int Power
         {
             get
             {
-                return _damage;
+                return _power;
             }
             set
             {
-                _damage = value;
+                _power = value;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Systems.ItemSystem
         {
             Durability = wa.Durability;
             WeaponType = wa.WType;
-            Damage = wa.WeaponDamage;
+            Power = wa.Power;
         }
 
         public void Break()

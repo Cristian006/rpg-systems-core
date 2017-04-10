@@ -11,15 +11,15 @@ namespace Systems.StatSystem
 		None = 0,
 		Health = 1,
 		Magic = 2,
-		Stamina = 3,
-		Armor = 4,
-		Mana = 5,
-		Speed = 6,
-		InventoryCap = 7,
-		Intellegence = 8,
-		Strength = 9,
-		Endurance = 10,
-		Agility = 11,
-		ArmorProtection = 12
+		Defense = 3,
+		Power = 4,
+		Strength = 6,
+		Wisdom = 7,
+		Willpower = 8,
+		Dexterity = 9,
+		Intellect = 10,
+		Constitution = 11,
+		Fortitude = 12,
+		Agility = 13
 	}
 }

@@ -98,7 +98,7 @@ namespace Systems.ItemSystem.InventorySystem
         {
             get
             {
-                return (Weapons.Weight + Consumables.Weight + QuestItems.Weight);
+                return Mathf.FloorToInt(Weapons.Weight + Consumables.Weight + QuestItems.Weight);
             }
         }
         

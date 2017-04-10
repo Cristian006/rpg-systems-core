@@ -123,60 +123,8 @@ namespace Systems.ItemSystem.Editor
                         GUILayout.BeginVertical("Box");
 
                         GUILayout.BeginHorizontal();
-                        //ITEM SPRITE
-                        GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
-                        asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
-                        GUILayout.Label("Item Sprite", GUILayout.Width(72));
-                        GUILayout.EndVertical();   //end vertical
-
-                        //ITEM CLASS
-                        GUILayout.BeginVertical(); //begin vertical
-                        GUILayout.Label("Item Class: " + asset.IType.ToString(), EditorStyles.boldLabel);
-
-                        //NAME
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Name", GUILayout.Width(80));
-                        asset.Name = EditorGUILayout.TextField(asset.Name);
-                        GUILayout.EndHorizontal();
-
-                        //DESCRIPTION
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Description", GUILayout.Width(80));
-                        asset.Description = EditorGUILayout.TextArea(asset.Description, GUILayout.MinHeight(30));
-                        GUILayout.EndHorizontal();
-
-                        //COST
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Cost", GUILayout.Width(80));
-                        asset.Cost = EditorGUILayout.IntField(asset.Cost);
-                        GUILayout.EndHorizontal();
-
-                        //STACKABLE
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Stackable", GUILayout.Width(80));
-                        GUILayout.BeginVertical();
-                        asset.Stackable = EditorGUILayout.Toggle(asset.Stackable);
-                        if (asset.Stackable)
-                        {
-                            GUILayout.Box("Set the weight of this item to be the weight of what would be a \"full stack\"", EditorStyles.helpBox);
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("Max Stack Size", GUILayout.Width(80));
-                            asset.StackSize = EditorGUILayout.IntSlider(asset.StackSize, 2, 99);
-                            GUILayout.EndHorizontal();
-                        }
-                        GUILayout.EndVertical();
-                        GUILayout.EndHorizontal();
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Level", GUILayout.Width(80));
-                        asset.Level = EditorGUILayout.IntSlider(asset.Level, 1, 99);
-                        GUILayout.EndHorizontal();
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Weight", GUILayout.Width(80));
-                        asset.Weight = EditorGUILayout.IntSlider(asset.Weight, 0, 99);
-                        GUILayout.EndHorizontal();
-
+                        Items(asset);
+                        
                         GUILayout.Label("Weapon Variables", EditorStyles.boldLabel);
 
                         GUILayout.BeginHorizontal();
@@ -209,6 +157,75 @@ namespace Systems.ItemSystem.Editor
         partial void Secondary(WeaponAsset asset);
 
         partial void Throw(WeaponAsset asset);
+
+        public void Items(ItemAsset asset)
+        {
+            //ITEM SPRITE
+            GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
+            asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
+            GUILayout.Label("Item Sprite", GUILayout.Width(72));
+            GUILayout.EndVertical();   //end vertical
+
+            //ITEM CLASS
+            GUILayout.BeginVertical(); //begin vertical
+            GUILayout.Label("Item Class: " + asset.IType.ToString(), EditorStyles.boldLabel);
+
+            //NAME
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Name", GUILayout.Width(80));
+            asset.Name = EditorGUILayout.TextField(asset.Name);
+            GUILayout.EndHorizontal();
+
+            //DESCRIPTION
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Description", GUILayout.Width(80));
+            asset.Description = EditorGUILayout.TextArea(asset.Description, GUILayout.MinHeight(30));
+            GUILayout.EndHorizontal();
+
+            //COST
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Cost", GUILayout.Width(80));
+            asset.Cost = EditorGUILayout.IntField(asset.Cost);
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Level", GUILayout.Width(80));
+            asset.Level = EditorGUILayout.IntSlider(asset.Level, 1, 99);
+            GUILayout.EndHorizontal();
+
+
+
+            //STACKABLE
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Stackable", GUILayout.Width(80));
+            GUILayout.BeginVertical();
+            asset.Stackable = EditorGUILayout.Toggle(asset.Stackable);
+            if (asset.Stackable)
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Max Stack", GUILayout.Width(80));
+                asset.StackSize = EditorGUILayout.IntSlider(asset.StackSize, 2, 99);
+                GUILayout.EndHorizontal();
+            }
+            GUILayout.EndVertical();
+            GUILayout.EndHorizontal();
+
+            if (asset.Stackable)
+            {
+                GUILayout.Box("Set the weight of this item to be the weight of an individual item", EditorStyles.helpBox);
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Weight", GUILayout.Width(80));
+                asset.Weight = EditorGUILayout.Slider(asset.Weight, 0, 99);
+                GUILayout.EndHorizontal();
+            }
+            else
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Weight", GUILayout.Width(80));
+                asset.Weight = EditorGUILayout.IntSlider(Mathf.FloorToInt(asset.Weight), 0, 99);
+                GUILayout.EndHorizontal();
+            }
+        }
 
         public virtual void Consumables()
         {
@@ -249,58 +266,9 @@ namespace Systems.ItemSystem.Editor
                         EditorGUI.BeginChangeCheck();
 
                         GUILayout.BeginVertical("Box");
-
                         GUILayout.BeginHorizontal();
-                        //ITEM SPRITE
-                        GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
-                        asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
-                        GUILayout.Label("Item Sprite", GUILayout.Width(72));
-                        GUILayout.EndVertical();   //end vertical
 
-                        //ITEM CLASS
-                        GUILayout.BeginVertical(); //begin vertical
-                        GUILayout.Label("Item Class: " + asset.IType.ToString(), EditorStyles.boldLabel);
-
-                        //NAME
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Name", GUILayout.Width(80));
-                        asset.Name = EditorGUILayout.TextField(asset.Name);
-                        GUILayout.EndHorizontal();
-
-                        //DESCRIPTION
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Description", GUILayout.Width(80));
-                        asset.Description = EditorGUILayout.TextArea(asset.Description, GUILayout.MinHeight(30));
-                        GUILayout.EndHorizontal();
-
-                        //COST
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Cost", GUILayout.Width(80));
-                        asset.Cost = EditorGUILayout.IntField(asset.Cost);
-                        GUILayout.EndHorizontal();
-
-                        //STACKABLE
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Stackable", GUILayout.Width(80));
-                        GUILayout.BeginVertical();
-                        asset.Stackable = EditorGUILayout.BeginToggleGroup("Enabled", asset.Stackable);
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Stack Size", GUILayout.Width(80));
-                        asset.StackSize = EditorGUILayout.IntSlider(asset.StackSize, 2, 64);
-                        GUILayout.EndHorizontal();
-                        GUILayout.EndVertical();
-                        GUILayout.EndHorizontal();
-                        EditorGUILayout.EndToggleGroup();
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Level", GUILayout.Width(80));
-                        asset.Level = EditorGUILayout.IntSlider(asset.Level, 1, 99);
-                        GUILayout.EndHorizontal();
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Weight", GUILayout.Width(80));
-                        asset.Weight = EditorGUILayout.IntSlider(asset.Weight, 0, 99);
-                        GUILayout.EndHorizontal();
+                        Items(asset);
 
                         GUILayout.Label("Consumable Variables", EditorStyles.boldLabel);
 
@@ -370,56 +338,8 @@ namespace Systems.ItemSystem.Editor
                         GUILayout.BeginVertical("Box");
 
                         GUILayout.BeginHorizontal();
-                        //ITEM SPRITE
-                        GUILayout.BeginVertical(GUILayout.Width(75)); //begin vertical
-                        asset.Icon = (Sprite)EditorGUILayout.ObjectField(asset.Icon, typeof(Sprite), false, GUILayout.Width(72), GUILayout.Height(72));
-                        GUILayout.Label("Item Sprite", GUILayout.Width(72));
-                        GUILayout.EndVertical();   //end vertical
 
-                        //ITEM CLASS
-                        GUILayout.BeginVertical(); //begin vertical
-                        GUILayout.Label("Item Class: " + asset.IType.ToString(), EditorStyles.boldLabel);
-
-                        //NAME
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Name", GUILayout.Width(80));
-                        asset.Name = EditorGUILayout.TextField(asset.Name);
-                        GUILayout.EndHorizontal();
-
-                        //DESCRIPTION
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Description", GUILayout.Width(80));
-                        asset.Description = EditorGUILayout.TextArea(asset.Description, GUILayout.MinHeight(30));
-                        GUILayout.EndHorizontal();
-
-                        //COST
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Cost", GUILayout.Width(80));
-                        asset.Cost = EditorGUILayout.IntField(asset.Cost);
-                        GUILayout.EndHorizontal();
-
-                        //STACKABLE
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Stackable", GUILayout.Width(80));
-                        GUILayout.BeginVertical();
-                        asset.Stackable = EditorGUILayout.BeginToggleGroup("Enabled", asset.Stackable);
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Stack Size", GUILayout.Width(80));
-                        asset.StackSize = EditorGUILayout.IntSlider(asset.StackSize, 2, 64);
-                        GUILayout.EndHorizontal();
-                        GUILayout.EndVertical();
-                        GUILayout.EndHorizontal();
-                        EditorGUILayout.EndToggleGroup();
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Level", GUILayout.Width(80));
-                        asset.Level = EditorGUILayout.IntSlider(asset.Level, 1, 99);
-                        GUILayout.EndHorizontal();
-
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Weight", GUILayout.Width(80));
-                        asset.Weight = EditorGUILayout.IntSlider(asset.Weight, 0, 99);
-                        GUILayout.EndHorizontal();
+                        Items(asset);
 
                         GUILayout.Label("QuestItem Variables", EditorStyles.boldLabel);
                         

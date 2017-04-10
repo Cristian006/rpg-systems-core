@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
+using Byte.ItemSystem;
 
 //TODO: Event handlers for weapon change
+//TODO: Keep stacks updated over time so when you use up one the next is equipped
 namespace Systems.ItemSystem.InventorySystem
 {
     public abstract class InventoryManager : MonoBehaviour
@@ -25,7 +28,7 @@ namespace Systems.ItemSystem.InventorySystem
         private int _primaryIndex = -1;
         private int _secondaryIndex = -1;
         private int _tertiaryIndex = -1;
-
+        
         #region GETTERS AND SETTERS
         private Inventory inventory
         {
@@ -102,6 +105,14 @@ namespace Systems.ItemSystem.InventorySystem
             get
             {
                 return TertiaryIndex >= 0 ? true : false;
+            }
+        }
+
+        public virtual bool MultipleItemStacks
+        {
+            get
+            {
+                return true;
             }
         }
         #endregion
@@ -197,7 +208,6 @@ namespace Systems.ItemSystem.InventorySystem
         #endregion
 
         #region INVENTORY METHODS
-        //TODO: Add option to reject object if they already have a stack filled instead of creating an entirely different stack
         /// <summary>
         /// Add Item to inventory if there's enough room.
         /// </summary>
@@ -209,33 +219,71 @@ namespace Systems.ItemSystem.InventorySystem
             {
                 if (Contains<T>(item.ID))
                 {
-                    T i = GetBy<T>(item.ID);
-                    if (item.Weight <= AvailableWeight)
+                    T i = GetOpenStack<T>(item.ID);
+                    if(i == null)
                     {
-                        if (i.StackSize < i.MaxStack)
+                        //no available stack - Create a new one?
+                        if (MultipleItemStacks)
                         {
-                            i.StackSize++;
-                            TriggerOnItemAdded(true);
-                            i = null;
-                            return;
-                        }
-                        else
-                        {
-                            inventory.Objects<T>().Add(item);
-                            TriggerOnItemAdded(true);
+                            if (item.Weight <= AvailableWeight)
+                            {
+                                //Create new stack if available weight;
+                                inventory.Objects<T>().Add(item);
+                                TriggerOnItemAdded(true);
+                                return;
+                            }
+                            else
+                            {
+                                TriggerOnItemAdded(false);
+                                return;
+                            }
                         }
                     }
                     else
                     {
-                        TriggerOnItemAdded(false);
-                        i = null;
-                        return;
-                    }
+                        if (item.Weight <= AvailableWeight)
+                        {
+                            int leftOver = (i.StackSize + item.StackSize) - i.MaxStack;
+                            Debug.Log("LEFT OVER!: " + leftOver);
+                            if(leftOver > 0 && MultipleItemStacks)
+                            {
+                                i.StackSize = i.MaxStack;
+                                //Create new stacks of that item with the leftoverstacks
+                                inventory.Objects<T>().Add((T)ItemFactory.itemFactory.GetItem<T>(item.Name, leftOver));
+                                TriggerOnItemAdded(true);
+                                i = null;
+                                return;
+                            }
+                            else
+                            {
+                                i.StackSize = i.MaxStack;
+                                //disgard rest of stack since we are not allowed to create multilple stacks of the same item
+                                TriggerOnItemAdded(true);
+                                i = null;
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            TriggerOnItemAdded(false);
+                            i = null;
+                            return;
+                        }
+                    }        
                 }
                 else
                 {
-                    inventory.Objects<T>().Add(item);
-                    TriggerOnItemAdded(true);
+                    if (item.Weight <= AvailableWeight)
+                    {
+                        inventory.Objects<T>().Add(item);
+                        TriggerOnItemAdded(true);
+                        return;
+                    }
+                    else
+                    {
+                        TriggerOnItemAdded(false);
+                        return;
+                    }
                 }
             }
             else
@@ -244,11 +292,13 @@ namespace Systems.ItemSystem.InventorySystem
                 {
                     inventory.Objects<T>().Add(item);
                     TriggerOnItemAdded(true);
+                    return;
                 }
                 else
                 {
                     TriggerOnItemAdded(false);
                     Debug.Log("Cannot add anymore Items, too much weight!");
+                    return;
                 }
             }
         }
@@ -264,9 +314,10 @@ namespace Systems.ItemSystem.InventorySystem
             {
                 if (isEquipped(item))
                 {
+                    //un equip item
                     Equip(item, false);
                 }
-
+                UpdateEquippedIndexes(inventory.Objects<T>().Objects.IndexOf(item));
                 inventory.Objects<T>().Remove(item);
                 TriggerOnItemRemoved(true);
             }
@@ -283,6 +334,8 @@ namespace Systems.ItemSystem.InventorySystem
         /// <param name="index"></param>
         public void RemoveAt<T>(int index) where T : Item
         {
+            CheckForUnEquip(index);
+            UpdateEquippedIndexes(index);
             inventory.Objects<T>().RemoveAt(index);
             TriggerOnItemRemoved(true);
         }
@@ -295,7 +348,7 @@ namespace Systems.ItemSystem.InventorySystem
         /// <param name="item"></param>
         public void Replace<T>(int index, T item) where T : Item
         {
-            int differnceInWeight = inventory.Objects<T>().GetAt(index).Weight - item.Weight;
+            float differnceInWeight = inventory.Objects<T>().GetAt(index).Weight - item.Weight;
 
             if ((inventory.Weight - differnceInWeight) <= MaxWeight)
             {
@@ -306,6 +359,35 @@ namespace Systems.ItemSystem.InventorySystem
             {
                 TriggerOnItemRemoved(false);
                 Debug.Log("CANNOT REPLACE ITEM, TOO MUCH WEIGHT");
+            }
+        }
+
+        public virtual void CheckForUnEquip(int index)
+        {
+            if (index == PrimaryIndex || index == SecondaryIndex)
+            {
+                //un equip item 
+                Equip<Weapon>(index, false);
+            }
+            else if(index == TertiaryIndex)
+            {
+                Equip<QuestItem>(index, false);
+            }
+        }
+
+        public virtual void UpdateEquippedIndexes(int index)
+        {
+            if(PrimaryIndex > index)
+            {
+                PrimaryIndex -= 1;
+            }
+            else if(SecondaryIndex > index)
+            {
+                SecondaryIndex -= 1;
+            }
+            else if(TertiaryIndex > index)
+            {
+                TertiaryIndex -= 1;
             }
         }
 
@@ -337,6 +419,56 @@ namespace Systems.ItemSystem.InventorySystem
         public T GetBy<T>(int id) where T : Item
         {
             return inventory.Objects<T>().GetBy(id);
+        }
+
+        public T GetOpenStack<T>(string name) where T : Item
+        {
+            List<T> list = inventory.Objects<T>().GetAll(name);
+            foreach(var i in list)
+            {
+                if (i.Stackable)
+                {
+                    if(i.StackSize < i.MaxStack)
+                    {
+                        return i;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    //don't need a list of them 
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        public T GetOpenStack<T>(int id) where T : Item
+        {
+            List<T> list = inventory.Objects<T>().GetAll(id);
+            foreach (var i in list)
+            {
+                if (i.Stackable)
+                {
+                    if (i.StackSize < i.MaxStack)
+                    {
+                        return i;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    //don't need a list of them 
+                    return null;
+                }
+            }
+            return null;
         }
         #endregion
 
@@ -482,9 +614,8 @@ namespace Systems.ItemSystem.InventorySystem
                     OnItemAddedFailure(this, null);
                 }
             }
-
         }
-
+        
         protected void TriggerOnItemRemoved(bool itemWasRemoved)
         {
             if (itemWasRemoved)

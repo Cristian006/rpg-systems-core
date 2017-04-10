@@ -15,7 +15,7 @@ namespace Systems.ItemSystem
         [SerializeField]
         private int _attackRange;
         [SerializeField]
-        private int _weaponDamage;
+        private int _power;
         [SerializeField]
         private float _force;
 
@@ -99,16 +99,16 @@ namespace Systems.ItemSystem
             }
         }
 
-        public int WeaponDamage
+        public int Power
         {
             get
             {
-                return _weaponDamage;
+                return _power;
             }
 
             set
             {
-                _weaponDamage = value;
+                _power = value;
             }
         }
         #endregion
@@ -119,7 +119,7 @@ namespace Systems.ItemSystem
             this.IType = ItemType.Weapon;
             this.WType = WeaponType.None;
             this.AttackRange = 0;
-            this.WeaponDamage = 0;
+            this.Power = 0;
         }
 
         public WeaponAsset(int id) : base (id)
@@ -129,7 +129,7 @@ namespace Systems.ItemSystem
             this.IType = ItemType.Weapon;
             this.WType = WeaponType.None;
             this.AttackRange = 0;
-            this.WeaponDamage = 0;
+            this.Power = 0;
         }
 
 
@@ -140,27 +140,27 @@ namespace Systems.ItemSystem
             this.IType = ItemType.Weapon;
             this.WType = WeaponType.None;
             this.AttackRange = 0;
-            this.WeaponDamage = 0;
+            this.Power = 0;
         }
 
-        public WeaponAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
+        public WeaponAsset(int id, string name, float weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
         {
             this.Durability = 0;
             this.Equipable = true;
             this.IType = ItemType.Weapon;
             this.WType = WeaponType.None;
             this.AttackRange = 0;
-            this.WeaponDamage = 0;
+            this.Power = 0;
         }
 
-        public WeaponAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost, int durability, bool equipable, WeaponType wType, int attackRange, int weaponDamage, float force) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
+        public WeaponAsset(int id, string name, float weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost, int durability, bool equipable, WeaponType wType, int attackRange, int power, float force) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
         {
             this.Durability = durability;
             this.Equipable = equipable;
             this.IType = ItemType.Weapon;
             this.WType = wType;
             this.AttackRange = attackRange;
-            this.WeaponDamage = weaponDamage;
+            this.Power = power;
             this.Force = force;
         }
     }

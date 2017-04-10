@@ -1,12 +1,12 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using Systems.EntitySystem.Enumerations;
-using Systems.EntitySystem.Database;
 using Systems.Config;
+using Systems.EntitySystem.Database;
+using Systems.EntitySystem.Enumerations;
 
 namespace Systems.EntitySystem.Editor
 {
-    public class EntityEditor : EditorWindow
+    public partial class EntityEditor : EditorWindow
     {
         [MenuItem("Window/Systems/Entity System/Entity Editor %#E")]
         static public void ShowWindow()
@@ -34,26 +34,21 @@ namespace Systems.EntitySystem.Editor
             }
         }
 
-        public void OnEnable()
-        {
-
-        }
-
         public void OnGUI()
         {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
             for (int i = 0; i < EntityDatabase.GetAssetCount(); i++)
             {
-                EntityAsset asset = EntityDatabase.GetAt(i);
-                if(asset != null)
+                EntityAsset asset = EntityDatabase.GetAt(i) as EntityAsset;
+                if (asset != null)
                 {
                     GUILayout.BeginHorizontal(EditorStyles.toolbar);
                     GUILayout.Label(string.Format("ID: {0}", asset.ID.ToString("D3")), GUILayout.Width(60));
 
                     bool clicked = GUILayout.Toggle(asset.ID == activeID, asset.Name, ToggleButtonStyle);
 
-                    if(clicked != (asset.ID == activeID))
+                    if (clicked != (asset.ID == activeID))
                     {
                         if (clicked)
                         {
@@ -66,14 +61,14 @@ namespace Systems.EntitySystem.Editor
                         }
                     }
 
-                    if(GUILayout.Button("-", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Entity", "Are you sure you want to delete " + asset.Name + " Entity?", "Delete", "Cancel"))
+                    if (GUILayout.Button("-", EditorStyles.toolbarButton, GUILayout.Width(30)) && EditorUtility.DisplayDialog("Delete Entity", "Are you sure you want to delete " + asset.Name + " Entity?", "Delete", "Cancel"))
                     {
                         EntityDatabase.Instance.RemoveAt(i);
                     }
 
                     GUILayout.EndHorizontal();
 
-                    if(activeID == asset.ID)
+                    if (activeID == asset.ID)
                     {
                         EditorGUI.BeginChangeCheck();
 
@@ -108,10 +103,10 @@ namespace Systems.EntitySystem.Editor
                         GUILayout.Label("Player Type", GUILayout.Width(80));
                         asset.PType = (PlayerType)EditorGUILayout.EnumPopup(asset.PType);
                         GUILayout.EndHorizontal();
-
+                        
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("Starting Level", GUILayout.Width(80));
-                        asset.StartLevel = (int)EditorGUILayout.IntSlider(asset.StartLevel,0, 99);
+                        asset.StartLevel = (int)EditorGUILayout.IntSlider(asset.StartLevel, 0, 99);
                         GUILayout.EndHorizontal();
 
                         GUILayout.BeginHorizontal();
@@ -130,7 +125,7 @@ namespace Systems.EntitySystem.Editor
                         GUILayout.EndHorizontal();  //b
 
                         GUILayout.EndVertical();  //a
-                        
+
                         if (EditorGUI.EndChangeCheck())
                         {
                             EditorUtility.SetDirty(EntityDatabase.Instance);
@@ -142,12 +137,17 @@ namespace Systems.EntitySystem.Editor
             GUILayout.EndScrollView();
 
             GUILayout.BeginHorizontal();
-            if(GUILayout.Button("New Entity", EditorStyles.toolbarButton))
-            {
-                var newAsset = new EntityAsset(EntityDatabase.Instance.GetNextId());
-                EntityDatabase.Instance.Add(newAsset);
-            }
+            GUITaskBar();
             GUILayout.EndHorizontal();
         }
+        
+        public void GUITaskBar()
+        {
+            if (GUILayout.Button("New Entity", EditorStyles.toolbarButton))
+            {
+                EntityDatabase.Instance.Add(new EntityAsset(EntityDatabase.Instance.GetNextId()));
+            }
+        }
+
     }
 }

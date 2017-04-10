@@ -44,14 +44,14 @@ namespace Systems.ItemSystem
             this.EffectAmount = 0;
         }
 
-        public ConsumableAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
+        public ConsumableAsset(int id, string name, float weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
         {
             this.IType = ItemType.Consumable;
             this.StatToEffect = StatType.None;
             this.EffectAmount = 0;
         }
 
-        public ConsumableAsset(int id, string name, int weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost, StatType statToEffect, int effectAmount) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
+        public ConsumableAsset(int id, string name, float weight, string description, bool stackable, int stackSize, Sprite icon, int level, int cost, StatType statToEffect, int effectAmount) : base(id, name, weight, description, stackable, stackSize, icon, level, cost)
         {
             this.IType = ItemType.Consumable;
             this.StatToEffect = statToEffect;

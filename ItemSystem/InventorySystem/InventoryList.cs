@@ -20,16 +20,16 @@ namespace Systems.ItemSystem.InventorySystem
             }
         }
 
-        public int Weight
+        public float Weight
         {
             get
             {
-                int total = 0;
+                float total = 0;
                 foreach (var i in Objects)
                 {
                     total += i.Weight;
                 }
-                return total;
+                return Mathf.FloorToInt(total);
             }
         }
 
@@ -154,7 +154,35 @@ namespace Systems.ItemSystem.InventorySystem
             }
             return default(T);
         }
-        
+
+        public List<T> GetAll(string name)
+        {
+            List<T> list = new List<T>();
+            for(int i = 0; i < Count; i++)
+            {
+                var asset = GetAt(i);
+                if(asset.Name == name)
+                {
+                    list.Add((T)GetAt(i));
+                }
+            }
+            return list;
+        }
+
+        public List<T> GetAll(int id)
+        {
+            List<T> list = new List<T>();
+            for (int i = 0; i < Count; i++)
+            {
+                var asset = GetAt(i);
+                if (asset.ID == id)
+                {
+                    list.Add((T)GetAt(i));
+                }
+            }
+            return list;
+        }
+
         public void OnAddObject(T t)
         {
 

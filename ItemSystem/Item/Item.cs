@@ -1,8 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Systems.StatSystem;
-using System;
 
 namespace Systems.ItemSystem
 {
@@ -12,7 +8,7 @@ namespace Systems.ItemSystem
         private string _name;
         private ItemType _iType;
         private string _description;
-        private int _weight;
+        private float _weight;
         private bool _stackable;
         private int _stackSize;
         private int _maxStack;
@@ -71,18 +67,27 @@ namespace Systems.ItemSystem
             }
         }
 
-        public int Weight
+        public float Weight
         {
             get
             {
                 if (Stackable)
                 {
-                    float norm = _weight / MaxStack;
-                    return Mathf.CeilToInt(StackSize * norm);
+                    if(StackSize > 0)
+                    {
+                        return Mathf.Clamp(Mathf.FloorToInt(StackSize * _weight), 1, float.MaxValue);
+                    }
+                    else
+                    {
+                        Debug.Log("THIS ITEM SHOULD NOT BE HERE - LOOK AT CODE AND FIX THIS");
+                        return _weight;
+                    }
                 }
-                return _weight;
+                else
+                {
+                    return Mathf.FloorToInt(_weight);
+                }
             }
-
             set
             {
                 _weight = value;
